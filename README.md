@@ -4,7 +4,7 @@
 
 EnterPass is a full-stack Django-powered event management and ticketing platform designed to simplify the process of discovering, organizing, and attending events. The platform provides a streamlined experience for both event organizers and attendees, offering robust features like event creation, ticket sales, and user profiles. EnterPass allows event hosts to create and manage events, set ticket prices, and monitor sales through a dedicated organizer dashboard.
 
-View the live website here - 
+View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ![UX Mockup](/static/images/UX.jpg)
 
@@ -12,7 +12,7 @@ View the live website here -
 
 
 ### Existing features
- 
+
 
 ### Core features
 
@@ -58,7 +58,7 @@ View the live website here -
 
 * 
 
-The live link can be found here - 
+The live link can be found here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ## Technologies Used
 
