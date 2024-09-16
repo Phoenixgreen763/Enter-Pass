@@ -10,6 +10,20 @@ body {
     font-family: 'Lato';
 }
 
+/* Ensure the navbar items are centered */
+.navbar-nav {
+    justify-content: center; /* Centers items inside the ul */
+    flex-grow: 1;
+}
+
+.nav-item {
+    text-align: center;
+}
+
+.navbar-collapse {
+    justify-content: center; /* Ensure the collapse aligns content centrally */
+}
+
 /* from Bulma */
 .icon {
     align-items: center;
@@ -34,7 +48,7 @@ body {
 
 .btn-outline-black {
     background: white;
-    color: black !important; /* use important to override link colors for <a> elements */
+    color: black !important;
     border: 1px solid black;
 }
 
@@ -90,9 +104,6 @@ input[name='q']::placeholder {
 .custom-toast {
     overflow: visible;
 }
-
-
-
 
 /* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
