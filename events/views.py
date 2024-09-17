@@ -5,66 +5,68 @@ from django.db.models.functions import Lower
 from .models import Event
 
 def all_events(request):
-    """ A view to show all events, including sorting and search queries """
+    """ A view to show all events, including sorting, search queries, and filters """
     
+    # Get all events
     events = Event.objects.all()
+    
+    # Initialize query, sorting, and direction
     query = None
     sort = None
     direction = None
+    category = None
+    special = None
 
-    if request.GET:
-        if 'sort' in request.GET:
-            sortkey = request.GET['sort']
-            sort = sortkey
-            if sortkey == 'title':
-                sortkey = 'lower_title'
-                events = events.annotate(lower_title=Lower('title'))
-            if sortkey == 'date':
-                sortkey = 'date'
-            if 'direction' in request.GET:
-                direction = request.GET['direction']
-                if direction == 'desc':
-                    sortkey = f'-{sortkey}'
-            events = events.order_by(sortkey)
-            
-        if 'q' in request.GET:
-            query = request.GET['q']
-            if not query:
-                messages.error(request, "You didn't enter any search criteria!")
-                return redirect(reverse('events'))
-            
-            queries = Q(title__icontains=query) | Q(description__icontains=query)
-            events = events.filter(queries)
-
-    current_sorting = f'{sort}_{direction}'
-
+    # Handle sorting
+    if 'sort' in request.GET:
+        sortkey = request.GET['sort']
+        sort = sortkey
+        if sortkey == 'title':
+            sortkey = 'lower_title'
+            events = events.annotate(lower_title=Lower('title'))
+        if sortkey == 'date':
+            sortkey = 'date'
+        if 'direction' in request.GET:
+            direction = request.GET['direction']
+            if direction == 'desc':
+                sortkey = f'-{sortkey}'
+        events = events.order_by(sortkey)
+    
+    # Handle search queries
+    if 'q' in request.GET:
+        query = request.GET['q']
+        if not query:
+            messages.error(request, "You didn't enter any search criteria!")
+            return redirect(reverse('all_events'))
+        
+        queries = Q(title__icontains=query) | Q(description__icontains=query)
+        events = events.filter(queries)
+    
+    # Handle category filtering
+    if 'category' in request.GET:
+        category = request.GET['category']
+        if category != 'all':  # Assuming 'all' means no category filter
+            events = events.filter(category=category)
+    
+    # Handle special offers filtering
+    if 'special' in request.GET:
+        special = request.GET['special']
+        if special == 'new':
+            events = events.filter(date__gte=date.today())  # Example filter for new events
+        elif special == 'deals':
+            events = events.filter(discount__gt=0)  # Example filter for deals
+        elif special == 'group':
+            events = events.filter(group_offer=True)  # Example filter for group offers
+    
+    # Construct current sorting string for context
+    current_sorting = f'{sort}_{direction}' if sort and direction else 'None_None'
+    
     context = {
         'events': events,
         'search_term': query,
         'current_sorting': current_sorting,
+        'current_category': category,
+        'current_special': special,
     }
 
     return render(request, 'events/events.html', context)
-
-def events_by_price(request):
-    events = Event.objects.all().order_by('price')  # Assuming you add a price field to Event model
-    return render(request, 'events.html', {'events': events})
-
-def events_by_rating(request):
-    events = Event.objects.all().order_by('-rating')  # Assuming you add a rating field to Event model
-    return render(request, 'events.html', {'events': events})
-
-def events_by_category(request, category):
-    events = Event.objects.filter(category=category)
-    return render(request, 'events.html', {'events': events})
-
-def events_special(request, special):
-    if special == 'new':
-        events = Event.objects.filter(date__gte=date.today())  # Example filter for new events
-    elif special == 'deals':
-        events = Event.objects.filter(discount__gt=0)  # Example filter for deals
-    elif special == 'group':
-        events = Event.objects.filter(group_offer=True)  # Example filter for group offers
-    else:
-        events = Event.objects.all()
-    return render(request, 'events.html', {'events': events})

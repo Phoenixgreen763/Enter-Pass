@@ -9,7 +9,8 @@
             "location": "New York Stadium",
             "total_tickets": 5000,
             "available_tickets": 5000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "50.00"
         }
     },
     {
@@ -22,7 +23,8 @@
             "location": "Los Angeles Arena",
             "total_tickets": 3000,
             "available_tickets": 3000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "45.00"
         }
     },
     {
@@ -35,7 +37,8 @@
             "location": "Chicago Central Park",
             "total_tickets": 10000,
             "available_tickets": 10000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "30.00"
         }
     },
     {
@@ -48,7 +51,8 @@
             "location": "Miami Tennis Club",
             "total_tickets": 2500,
             "available_tickets": 2500,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "60.00"
         }
     },
     {
@@ -61,7 +65,8 @@
             "location": "Orlando Golf Course",
             "total_tickets": 2000,
             "available_tickets": 2000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "75.00"
         }
     },
     {
@@ -74,7 +79,8 @@
             "location": "Dallas Aquatic Center",
             "total_tickets": 3500,
             "available_tickets": 3500,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "40.00"
         }
     },
     {
@@ -87,7 +93,8 @@
             "location": "San Francisco Stadium",
             "total_tickets": 7000,
             "available_tickets": 7000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "70.00"
         }
     },
     {
@@ -100,7 +107,8 @@
             "location": "Seattle Cycling Track",
             "total_tickets": 4000,
             "available_tickets": 4000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "55.00"
         }
     },
     {
@@ -113,7 +121,8 @@
             "location": "Boston Ice Arena",
             "total_tickets": 5000,
             "available_tickets": 5000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "65.00"
         }
     },
     {
@@ -126,7 +135,8 @@
             "location": "Houston Baseball Park",
             "total_tickets": 8000,
             "available_tickets": 8000,
-            "category": "Sports"
+            "category": "Sports",
+            "price": "80.00"
         }
     },
     {
@@ -139,7 +149,8 @@
             "location": "Austin Music Hall",
             "total_tickets": 10000,
             "available_tickets": 10000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "120.00"
         }
     },
     {
@@ -152,7 +163,8 @@
             "location": "Los Angeles Convention Center",
             "total_tickets": 8000,
             "available_tickets": 8000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "100.00"
         }
     },
     {
@@ -165,7 +177,8 @@
             "location": "Chicago Jazz Club",
             "total_tickets": 500,
             "available_tickets": 500,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "50.00"
         }
     },
     {
@@ -178,7 +191,8 @@
             "location": "Miami Arena",
             "total_tickets": 6000,
             "available_tickets": 6000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "110.00"
         }
     },
     {
@@ -191,7 +205,8 @@
             "location": "San Francisco Opera House",
             "total_tickets": 2000,
             "available_tickets": 2000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "80.00"
         }
     },
     {
@@ -204,7 +219,8 @@
             "location": "Dallas Fairgrounds",
             "total_tickets": 7000,
             "available_tickets": 7000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "90.00"
         }
     },
     {
@@ -217,7 +233,8 @@
             "location": "Seattle Music Hall",
             "total_tickets": 1500,
             "available_tickets": 1500,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "45.00"
         }
     },
     {
@@ -230,7 +247,8 @@
             "location": "Orlando Beach Club",
             "total_tickets": 2000,
             "available_tickets": 2000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "55.00"
         }
     },
     {
@@ -243,7 +261,8 @@
             "location": "New Orleans Jazz Club",
             "total_tickets": 3000,
             "available_tickets": 3000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "65.00"
         }
     },
     {
@@ -256,7 +275,8 @@
             "location": "Boston Arena",
             "total_tickets": 4000,
             "available_tickets": 4000,
-            "category": "Music/Festivals"
+            "category": "Music/Festivals",
+            "price": "75.00"
         }
     },
     {
@@ -269,7 +289,8 @@
             "location": "London Theatre",
             "total_tickets": 300,
             "available_tickets": 300,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "40.00"
         }
     },
     {
@@ -282,7 +303,8 @@
             "location": "New York City Stage",
             "total_tickets": 250,
             "available_tickets": 250,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "35.00"
         }
     },
     {
@@ -295,7 +317,8 @@
             "location": "Chicago Theatre",
             "total_tickets": 400,
             "available_tickets": 400,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "60.00"
         }
     },
     {
@@ -308,7 +331,8 @@
             "location": "San Francisco Arts Center",
             "total_tickets": 150,
             "available_tickets": 150,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "25.00"
         }
     },
     {
@@ -321,7 +345,8 @@
             "location": "Los Angeles Ballet Theatre",
             "total_tickets": 200,
             "available_tickets": 200,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "70.00"
         }
     },
     {
@@ -334,7 +359,8 @@
             "location": "Dallas Comedy Club",
             "total_tickets": 180,
             "available_tickets": 180,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "30.00"
         }
     },
     {
@@ -347,7 +373,8 @@
             "location": "Boston Family Theatre",
             "total_tickets": 350,
             "available_tickets": 350,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "40.00"
         }
     },
     {
@@ -360,7 +387,8 @@
             "location": "Seattle Theatre District",
             "total_tickets": 400,
             "available_tickets": 400,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "50.00"
         }
     },
     {
@@ -373,7 +401,8 @@
             "location": "Philadelphia Historical Theatre",
             "total_tickets": 300,
             "available_tickets": 300,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "55.00"
         }
     },
     {
@@ -386,7 +415,8 @@
             "location": "Orlando Main Stage",
             "total_tickets": 500,
             "available_tickets": 500,
-            "category": "Theatre"
+            "category": "Theatre",
+            "price": "45.00"
         }
     }
 ]

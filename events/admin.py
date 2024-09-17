@@ -11,6 +11,7 @@ class EventAdmin(admin.ModelAdmin):
         'available_tickets',
         'display_category',
         'is_sold_out',
+        'price',
     )
 
     ordering = ('date',)
