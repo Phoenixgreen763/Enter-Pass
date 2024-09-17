@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+<body>
+    <h1>Events</h1>
+    
+    <!-- Search Form -->
+    <form method="get" action="{% url 'all_events' %}">
+        <input type="text" name="q" placeholder="Search" value="{{ search_term }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Sorting Options -->
+    <form method="get" action="{% url 'all_events' %}">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort">
+            <option value="">-- Select --</option>
+            <option value="title" {% if current_sorting|slice:":-4" == "title" %}selected{% endif %}>Title</option>
+            <option value="date" {% if current_sorting|slice:":-4" == "date" %}selected{% endif %}>Date</option>
+        </select>
+
+        <label for="direction">Order:</label>
+        <select name="direction" id="direction">
+            <option value="asc" {% if current_sorting|slice:":-4" == "asc" %}selected{% endif %}>Ascending</option>
+            <option value="desc" {% if current_sorting|slice:":-4" == "desc" %}selected{% endif %}>Descending</option>
+        </select>
+
+        <button type="submit">Apply</button>
+    </form>
+
+    <!-- Events List -->
+    <ul>
+        {% for event in events %}
+            <li>
+                <strong>{{ event.title }}</strong><br>
+                {{ event.date }}<br>
+                {{ event.location }}<br>
+                {{ event.description }}<br>
+            </li>
+        {% empty %}
+            <li>No events found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
