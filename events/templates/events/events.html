@@ -50,6 +50,17 @@
                     {% for event in events %}
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                             <div class="card h-100 border-0">
+                                {% if event.category.name == "Sports" %}
+                                    <img src="{% static 'images/sport-events.webp' %}" class="card-img-top" alt="Sports Banner" style="height: 100px; object-fit: cover;">
+                                {% elif event.category.name == "Music" %}
+                                    <img src="{% static 'images/music-events.jpg' %}" class="card-img-top" alt="Music Banner" style="height: 100px; object-fit: cover;">
+                                {% elif event.category.name == "Art" %}
+                                    <img src="{% static 'images/art-events.webp' %}" class="card-img-top" alt="Art Banner" style="height: 100px; object-fit: cover;">
+                                {% else %}
+                                    {% if event.category.image %}
+                                        <img src="{{ event.category.image.url }}" class="card-img-top" alt="{{ event.category.get_friendly_name_display }}" style="height: 100px; object-fit: cover;">
+                                    {% endif %}
+                                {% endif %}
                                 <div class="card-body pb-0">
                                     <p class="mb-0 font-weight-bold">{{ event.title }}</p>
                                     <p class="mb-0">{{ event.date }}</p>
@@ -60,11 +71,11 @@
                                         <div class="col">
                                             <p class="lead mb-0 text-left font-weight-bold">Tickets: {{ event.available_tickets }} available</p>
                                             {% if event.category %}
-                                            <p class="small mt-1 mb-0">
-                                                <a class="text-muted" href="{% url 'all_events' %}?category={{ event.category }}">
-                                                    <i class="fas fa-tag mr-1"></i>{{ event.get_category_display }}
-                                                </a>
-                                            </p>
+                                                <p class="small mt-1 mb-0">
+                                                    <a class="text-muted" href="{% url 'all_events' %}?category={{ event.category }}">
+                                                        <i class="fas fa-tag mr-1"></i>{{ event.get_category_display }}
+                                                    </a>
+                                                </p>
                                             {% endif %}
                                             {% if event.is_sold_out %}
                                                 <small class="text-danger">Sold Out</small>
@@ -80,28 +91,9 @@
                                 </div>
                             </div>
                         </div>
-                        {% if forloop.counter|divisibleby:1 %}
-                            <div class="col-12 d-sm-none mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}                        
-                        {% if forloop.counter|divisibleby:2 %}
-                            <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}
-                        {% if forloop.counter|divisibleby:3 %}
-                            <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}
-                        {% if forloop.counter|divisibleby:4 %}
-                            <div class="col-12 d-none d-xl-block mb-5">
-                                <hr>
-                            </div>
-                        {% endif %}
                     {% endfor %}
                 </div>
+                
             </div>
         </div>
     </div>
