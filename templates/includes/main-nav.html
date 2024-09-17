@@ -16,10 +16,10 @@
                 Category
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="category-link">
-                <a href="" class="dropdown-item">Music/Festivals</a>
-                <a href="" class="dropdown-item">Sports</a>
-                <a href="" class="dropdown-item">Theatre</a>
-                <a href="" class="dropdown-item">All Categories</a>
+                <a href="{% url 'all_events' %}?category=music" class="dropdown-item">Music/Festivals</a>
+                <a href="{% url 'all_events' %}?category=sports" class="dropdown-item">Sports</a>
+                <a href="{% url 'all_events' %}?category=theatre" class="dropdown-item">Theatre</a>
+                <a href="{% url 'all_events' %}?category=all" class="dropdown-item">All Categories</a>
             </div>
         </li>
 
