@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
 from .models import Event
+from datetime import date
 
 def all_events(request):
     """ A view to show all events, including sorting, search queries, and filters """
