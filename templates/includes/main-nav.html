@@ -28,10 +28,10 @@
                 Special Offers
             </a>
             <div class="dropdown-menu border-0" aria-labelledby="special-link">
-                <a href="" class="dropdown-item">New Events</a>
-                <a href="" class="dropdown-item">Deals</a>
-                <a href="" class="dropdown-item">Group Offers</a>
-                <a href="" class="dropdown-item">All Specials</a>
+                <a href="{% url 'all_events' %}?special=new" class="dropdown-item">New Events</a>
+                <a href="{% url 'all_events' %}?special=deals" class="dropdown-item">Deals</a>
+                <a href="{% url 'all_events' %}?special=group" class="dropdown-item">Group Offers</a>
+                <a href="{% url 'all_events' %}?special=all" class="dropdown-item">All Specials</a>
             </div>
         </li>
     </ul>
