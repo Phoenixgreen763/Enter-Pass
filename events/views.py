@@ -45,3 +45,26 @@ def all_events(request):
     }
 
     return render(request, 'events/events.html', context)
+
+def events_by_price(request):
+    events = Event.objects.all().order_by('price')  # Assuming you add a price field to Event model
+    return render(request, 'events.html', {'events': events})
+
+def events_by_rating(request):
+    events = Event.objects.all().order_by('-rating')  # Assuming you add a rating field to Event model
+    return render(request, 'events.html', {'events': events})
+
+def events_by_category(request, category):
+    events = Event.objects.filter(category=category)
+    return render(request, 'events.html', {'events': events})
+
+def events_special(request, special):
+    if special == 'new':
+        events = Event.objects.filter(date__gte=date.today())  # Example filter for new events
+    elif special == 'deals':
+        events = Event.objects.filter(discount__gt=0)  # Example filter for deals
+    elif special == 'group':
+        events = Event.objects.filter(group_offer=True)  # Example filter for group offers
+    else:
+        events = Event.objects.all()
+    return render(request, 'events.html', {'events': events})
