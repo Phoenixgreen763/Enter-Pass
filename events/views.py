@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
 from .models import Event, Category
+from .forms import EventForm
 
 def all_events(request):
     """ A view to show all events, including sorting, search queries, and filters """
@@ -77,3 +78,17 @@ def event_detail(request, event_id):
         'event': event,
     }
     return render(request, 'events/event_detail.html', context)
+
+
+def edit_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('event_detail', event_id=event.id)  # Redirect to the event detail page
+    else:
+        form = EventForm(instance=event)
+
+    return render(request, 'events/edit_event.html', {'form': form, 'event': event})
