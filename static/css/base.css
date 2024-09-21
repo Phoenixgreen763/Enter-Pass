@@ -113,6 +113,11 @@ body {
     cursor: pointer;
 }
 
+.event_link {
+    color: black;
+    text-decoration: none;
+}
+
 input[name='q']::placeholder {
     color: #aab7c4;
 }
