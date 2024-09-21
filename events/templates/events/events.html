@@ -50,16 +50,18 @@
                 {% for event in events %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                         <div class="card h-100 border-0">
-                            <div class="card-body pb-0">
-                                {% if event.category.image %}
-                                    <img src="{{ event.category.image.url }}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
-                                {% else %}
-                                    <img src="{% static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
-                                {% endif %}
-                                <p class="mb-0 font-weight-bold">{{ event.title }}</p>
-                                <p class="mb-0">{{ event.date }}</p>
-                                <p class="text-muted mb-1">{{ event.location }}</p>
-                            </div>
+                            <a href="{% url 'event_detail' event.id %}">
+                                <div class="card-body pb-0">
+                                    {% if event.category.image %}
+                                        <img src="{{ event.category.image.url }}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
+                                    {% else %}
+                                        <img src="{% static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
+                                    {% endif %}
+                                    <p class="mb-0 font-weight-bold">{{ event.title }}</p>
+                                    <p class="mb-0">{{ event.date }}</p>
+                                    <p class="text-muted mb-1">{{ event.location }}</p>
+                                </div>
+                            </a>
                             <div class="card-footer bg-white pt-0 border-0 text-left">
                                 <div class="row">
                                     <div class="col">
@@ -88,6 +90,7 @@
                     </div>
                 {% endfor %}
             </div>
+            
         </div>
     </div>
 </div>

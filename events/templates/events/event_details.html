@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ event.title }}</h2>
+    <p><strong>Date:</strong> {{ event.date }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Tickets Available:</strong> {{ event.available_tickets }}</p>
+    <p><strong>Price:</strong> ${{ event.price }}</p>
+    {% if event.is_sold_out %}
+        <p class="text-danger">Sold Out</p>
+    {% endif %}
+    <a href="{% url 'all_events' %}" class="btn btn-outline-primary">Back to Events</a>
+</div>
+{% endblock %}
