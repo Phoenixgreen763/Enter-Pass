@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     
     # Other
     'crispy_forms',
+    'crispy_bootstrap5',
     'storages',
 ]
 
@@ -63,7 +64,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'enter_pass.urls'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 TEMPLATES = [
     {
