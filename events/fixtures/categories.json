@@ -1,0 +1,26 @@
+[
+    {
+        "model": "events.category",
+        "pk": 1,
+        "fields": {
+            "name": "Sports",
+            "image": "sports-events.webp"  
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 2,
+        "fields": {
+            "name": "Music/Festivals",
+            "image": "music-events.jpg"  
+        }
+    },
+    {
+        "model": "events.category",
+        "pk": 3,
+        "fields": {
+            "name": "Theatre",
+            "image": "theatre-events.webp"  
+        }
+    }
+]

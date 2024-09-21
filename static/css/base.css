@@ -64,6 +64,10 @@ body {
     padding: 10px;
 }
 
+.event-header {
+    margin-top: 3rem !important;
+}
+
 .btn-black {
     background: black;
     color: white;

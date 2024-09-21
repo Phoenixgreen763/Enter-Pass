@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
-from .models import Event
+from .models import Event, Category  # Import Category
 from datetime import date
 
 def all_events(request):
@@ -46,18 +46,16 @@ def all_events(request):
     # Handle category filtering
     if 'category' in request.GET:
         category = request.GET['category']
-        if category != 'all':  # Assuming 'all' means no category filter
-            events = events.filter(category=category)
+        if category != 'all':
+            try:
+                category_instance = Category.objects.get(id=category)  # Get the Category object
+                events = events.filter(category=category_instance)  # Filter by the Category instance
+            except Category.DoesNotExist:
+                messages.error(request, "Selected category does not exist.")
+                return redirect(reverse('all_events'))
     
-    # Handle special offers filtering
-    if 'special' in request.GET:
-        special = request.GET['special']
-        if special == 'new':
-            events = events.filter(date__gte=date.today())  # Example filter for new events
-        elif special == 'deals':
-            events = events.filter(discount__gt=0)  # Example filter for deals
-        elif special == 'group':
-            events = events.filter(group_offer=True)  # Example filter for group offers
+    # Handle special offers filtering (if applicable)
+    # Add your logic for special offers here
     
     # Construct current sorting string for context
     current_sorting = f'{sort}_{direction}' if sort and direction else 'None_None'
