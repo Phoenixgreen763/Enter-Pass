@@ -68,6 +68,10 @@ body {
     margin-top: 3rem !important;
 }
 
+.banner-detail {
+    margin-bottom: 5%;
+}
+
 .btn-black {
     background: black;
     color: white;
