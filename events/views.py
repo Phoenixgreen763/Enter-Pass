@@ -2,12 +2,11 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
-from .models import Event, Category  # Import Category
-from datetime import date
+from .models import Event, Category
 
 def all_events(request):
     """ A view to show all events, including sorting, search queries, and filters """
-    
+
     # Get all events
     events = Event.objects.all()
     
@@ -32,17 +31,17 @@ def all_events(request):
             if direction == 'desc':
                 sortkey = f'-{sortkey}'
         events = events.order_by(sortkey)
-    
+
     # Handle search queries
     if 'q' in request.GET:
         query = request.GET['q']
         if not query:
             messages.error(request, "You didn't enter any search criteria!")
             return redirect(reverse('all_events'))
-        
+
         queries = Q(title__icontains=query) | Q(description__icontains=query)
         events = events.filter(queries)
-    
+
     # Handle category filtering
     if 'category' in request.GET:
         category = request.GET['category']
@@ -53,9 +52,9 @@ def all_events(request):
             except Category.DoesNotExist:
                 messages.error(request, "Selected category does not exist.")
                 return redirect(reverse('all_events'))
-    
-    # Handle special offers filtering (if applicable)
-    # Add your logic for special offers here
+
+    # Fetch all categories for navbar
+    categories = Category.objects.all()
     
     # Construct current sorting string for context
     current_sorting = f'{sort}_{direction}' if sort and direction else 'None_None'
@@ -66,6 +65,7 @@ def all_events(request):
         'current_sorting': current_sorting,
         'current_category': category,
         'current_special': special,
+        'current_categories': categories,  # Add this line
     }
 
     return render(request, 'events/events.html', context)
