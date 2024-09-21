@@ -12,7 +12,8 @@ body {
 
 /* Ensure the navbar items are centered */
 .navbar-nav {
-    justify-content: center; /* Centers items inside the ul */
+    justify-content: center;
+    /* Centers items inside the ul */
     flex-grow: 1;
 }
 
@@ -21,7 +22,8 @@ body {
 }
 
 .navbar-collapse {
-    justify-content: center; /* Ensure the collapse aligns content centrally */
+    justify-content: center;
+    /* Ensure the collapse aligns content centrally */
 }
 
 /* from Bulma */
@@ -42,9 +44,17 @@ body {
 }
 
 .custom-h1 {
-    display: inline-block; /* Ensure the border wraps around just the text */
-    border: 2px solid black; /* Add a border around the text */
-    padding: 10px 20px;
+    color: black;
+    /* Main text color */
+    text-shadow:
+        -2px -2px 0 white,
+        /* Top-left shadow */
+        2px -2px 0 white,
+        /* Top-right shadow */
+        -2px 2px 0 white,
+        /* Bottom-left shadow */
+        2px 2px 0 white;
+    /* Bottom-right shadow */
 }
 
 .custom-shop-button {
