@@ -1,14 +1,9 @@
 <div class="collapse navbar-collapse" id="main-nav">
     <ul class="navbar-nav w-auto mx-auto justify-content-center">
-        <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="all-tickets-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li>
+            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="{% url 'all_events' %}" id="all-tickets-link">
                 Tickets
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="all-tickets-link">
-                <a href="" class="dropdown-item">By Price</a>
-                <a href="" class="dropdown-item">By Rating</a>
-                <a href="{% url 'all_events' %}" class="dropdown-item">All Tickets</a>
-            </div>
         </li>
 
         <li class="nav-item dropdown">
@@ -20,18 +15,6 @@
                 <a href="{% url 'all_events' %}?category=sports" class="dropdown-item">Sports</a>
                 <a href="{% url 'all_events' %}?category=theatre" class="dropdown-item">Theatre</a>
                 <a href="{% url 'all_events' %}?category=all" class="dropdown-item">All Categories</a>
-            </div>
-        </li>
-
-        <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-black" href="#" id="special-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Special Offers
-            </a>
-            <div class="dropdown-menu border-0" aria-labelledby="special-link">
-                <a href="{% url 'all_events' %}?special=new" class="dropdown-item">New Events</a>
-                <a href="{% url 'all_events' %}?special=deals" class="dropdown-item">Deals</a>
-                <a href="{% url 'all_events' %}?special=group" class="dropdown-item">Group Offers</a>
-                <a href="{% url 'all_events' %}?special=all" class="dropdown-item">All Specials</a>
             </div>
         </li>
     </ul>

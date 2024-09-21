@@ -42,6 +42,12 @@ body {
 }
 
 .custom-h1 {
+    display: inline-block; /* Ensure the border wraps around just the text */
+    border: 2px solid black; /* Add a border around the text */
+    padding: 10px 20px;
+}
+
+.custom-shop-button {
     background-color: white;
     border: 2px solid black;
     padding: 10px;
