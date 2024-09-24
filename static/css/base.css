@@ -118,6 +118,10 @@ body {
     text-decoration: none;
 }
 
+.back-to-top {
+    margin-top: 1%;
+}
+
 .book-button {
     margin-bottom: 1%;
 }
