@@ -136,14 +136,23 @@ input[name='q']::placeholder {
     z-index: -1;
 }
 
-/* Toasts */
-.toast-capper {
-    height: 2px;
+/* ------------------------------- bootstrap toasts */
+
+.message-container {
+    position: fixed;
+    top: 72px;
+    right: 15px;
+    z-index: 99999999999;
 }
 
 .custom-toast {
     overflow: visible;
 }
+
+.toast-capper {
+    height: 2px;
+}
+
 
 /* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
