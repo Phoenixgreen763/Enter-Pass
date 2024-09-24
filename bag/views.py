@@ -8,11 +8,13 @@ def view_bag(request):
     """ A view that renders the bag contents page """
     bag = request.session.get('bag', {})
     bag_items = []
-    
+    total = Decimal('0.00')  # Initialize total as Decimal
+
     for item_id, quantity in bag.items():
         try:
             event = Event.objects.get(pk=item_id)  # Fetch the event by ID
             subtotal = event.price * quantity  # Calculate subtotal for this item
+            total += subtotal  # Accumulate total
             bag_items.append({
                 'event': event,
                 'quantity': quantity,
@@ -22,15 +24,17 @@ def view_bag(request):
         except Event.DoesNotExist:
             messages.error(request, f'Event with ID {item_id} does not exist.')
 
-    # Set total without delivery cost
-    grand_total = calculate_grand_total(bag)  # Use the helper function
+    grand_total = total  # Set grand total to total
 
     context = {
         'bag_items': bag_items,
+        'total': total,
         'grand_total': grand_total,
+        'messages': messages.get_messages(request), 
     }
 
     return render(request, 'bag/bag.html', context)
+
 
 
 def add_to_bag(request, item_id):
