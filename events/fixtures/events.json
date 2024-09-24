@@ -3,104 +3,6 @@
         "model": "events.event",
         "pk": 1,
         "fields": {
-            "title": "Football Championship",
-            "description": "The final match of the national football championship.",
-            "date": "2024-09-15",
-            "location": "New York Stadium",
-            "total_tickets": 5000,
-            "available_tickets": 5000,
-            "category": 1,
-            "price": "50.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 2,
-        "fields": {
-            "title": "Basketball Tournament",
-            "description": "Regional basketball tournament with top teams.",
-            "date": "2024-10-05",
-            "location": "Los Angeles Arena",
-            "total_tickets": 3000,
-            "available_tickets": 3000,
-            "category": 1,
-            "price": "45.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 3,
-        "fields": {
-            "title": "Marathon Run",
-            "description": "Annual marathon run with participants from around the world.",
-            "date": "2024-11-01",
-            "location": "Chicago Central Park",
-            "total_tickets": 10000,
-            "available_tickets": 10000,
-            "category": 1,
-            "price": "30.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 4,
-        "fields": {
-            "title": "Tennis Open",
-            "description": "Grand tennis open tournament featuring top players.",
-            "date": "2024-12-01",
-            "location": "Miami Tennis Club",
-            "total_tickets": 2500,
-            "available_tickets": 2500,
-            "category": 1,
-            "price": "60.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 5,
-        "fields": {
-            "title": "Golf Championship",
-            "description": "Annual golf championship with international participants.",
-            "date": "2024-12-15",
-            "location": "Orlando Golf Course",
-            "total_tickets": 2000,
-            "available_tickets": 2000,
-            "category": 1,
-            "price": "75.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 6,
-        "fields": {
-            "title": "International Swimming Meet",
-            "description": "Competitive swimming meet with international swimmers.",
-            "date": "2024-11-20",
-            "location": "Dallas Aquatic Center",
-            "total_tickets": 3500,
-            "available_tickets": 3500,
-            "category": 1,
-            "price": "40.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 7,
-        "fields": {
-            "title": "Rugby World Cup",
-            "description": "The finals of the Rugby World Cup.",
-            "date": "2024-10-25",
-            "location": "San Francisco Stadium",
-            "total_tickets": 7000,
-            "available_tickets": 7000,
-            "category": 1,
-            "price": "70.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 8,
-        "fields": {
             "title": "Cycling Grand Prix",
             "description": "Annual cycling grand prix with competitive races.",
             "date": "2024-11-10",
@@ -113,7 +15,21 @@
     },
     {
         "model": "events.event",
-        "pk": 9,
+        "pk": 2,
+        "fields": {
+            "title": "Jazz Night",
+            "description": "An evening of smooth jazz music featuring local artists.",
+            "date": "2024-11-05",
+            "location": "New Orleans Jazz Lounge",
+            "total_tickets": 200,
+            "available_tickets": 200,
+            "category": 2,
+            "price": "30.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 3,
         "fields": {
             "title": "Ice Hockey Championship",
             "description": "Season finale of the ice hockey championship.",
@@ -127,147 +43,7 @@
     },
     {
         "model": "events.event",
-        "pk": 10,
-        "fields": {
-            "title": "Baseball World Series",
-            "description": "The grand finals of the Baseball World Series.",
-            "date": "2024-09-30",
-            "location": "Houston Baseball Park",
-            "total_tickets": 8000,
-            "available_tickets": 8000,
-            "category": 1,
-            "price": "80.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 11,
-        "fields": {
-            "title": "Rock Music Festival",
-            "description": "Three-day rock music festival featuring popular bands.",
-            "date": "2024-09-20",
-            "location": "Austin Music Hall",
-            "total_tickets": 10000,
-            "available_tickets": 10000,
-            "category": 2,
-            "price": "120.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 12,
-        "fields": {
-            "title": "Electronic Dance Festival",
-            "description": "A festival showcasing the best in electronic dance music.",
-            "date": "2024-10-12",
-            "location": "Los Angeles Convention Center",
-            "total_tickets": 8000,
-            "available_tickets": 8000,
-            "category": 2,
-            "price": "100.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 13,
-        "fields": {
-            "title": "Jazz Night Out",
-            "description": "An evening of smooth jazz with local artists.",
-            "date": "2024-11-05",
-            "location": "Chicago Jazz Club",
-            "total_tickets": 500,
-            "available_tickets": 500,
-            "category": 2,
-            "price": "50.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 14,
-        "fields": {
-            "title": "Pop Music Extravaganza",
-            "description": "A concert featuring top pop artists from around the world.",
-            "date": "2024-12-01",
-            "location": "Miami Arena",
-            "total_tickets": 6000,
-            "available_tickets": 6000,
-            "category": 2,
-            "price": "110.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 15,
-        "fields": {
-            "title": "Classical Music Gala",
-            "description": "A night of classical music performed by a renowned orchestra.",
-            "date": "2024-10-25",
-            "location": "San Francisco Opera House",
-            "total_tickets": 2000,
-            "available_tickets": 2000,
-            "category": 2,
-            "price": "80.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 16,
-        "fields": {
-            "title": "Country Music Festival",
-            "description": "An outdoor festival featuring popular country music stars.",
-            "date": "2024-09-28",
-            "location": "Dallas Fairgrounds",
-            "total_tickets": 7000,
-            "available_tickets": 7000,
-            "category": 2,
-            "price": "90.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 17,
-        "fields": {
-            "title": "Indie Music Showcase",
-            "description": "Showcase of indie bands and solo artists.",
-            "date": "2024-11-15",
-            "location": "Seattle Music Hall",
-            "total_tickets": 1500,
-            "available_tickets": 1500,
-            "category": 2,
-            "price": "45.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 18,
-        "fields": {
-            "title": "Reggae Dance Party",
-            "description": "A vibrant dance party featuring reggae music.",
-            "date": "2024-12-10",
-            "location": "Orlando Beach Club",
-            "total_tickets": 2000,
-            "available_tickets": 2000,
-            "category": 2,
-            "price": "55.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 19,
-        "fields": {
-            "title": "Blues Music Festival",
-            "description": "A festival celebrating blues music with live performances.",
-            "date": "2024-10-10",
-            "location": "New Orleans Jazz Club",
-            "total_tickets": 3000,
-            "available_tickets": 3000,
-            "category": 2,
-            "price": "65.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 20,
+        "pk": 4,
         "fields": {
             "title": "Heavy Metal Concert",
             "description": "A concert featuring famous heavy metal bands.",
@@ -281,21 +57,21 @@
     },
     {
         "model": "events.event",
-        "pk": 21,
+        "pk": 5,
         "fields": {
-            "title": "Shakespearean Play",
-            "description": "A performance of Shakespeare's classic play.",
-            "date": "2024-09-10",
-            "location": "London Theatre",
-            "total_tickets": 300,
-            "available_tickets": 300,
-            "category": 3,
-            "price": "40.00"
+            "title": "Baseball World Series",
+            "description": "The grand finals of the Baseball World Series.",
+            "date": "2024-09-30",
+            "location": "Houston Baseball Park",
+            "total_tickets": 8000,
+            "available_tickets": 8000,
+            "category": 1,
+            "price": "80.00"
         }
     },
     {
         "model": "events.event",
-        "pk": 22,
+        "pk": 6,
         "fields": {
             "title": "Modern Drama",
             "description": "A contemporary drama performance by local artists.",
@@ -309,21 +85,7 @@
     },
     {
         "model": "events.event",
-        "pk": 23,
-        "fields": {
-            "title": "Musical Extravaganza",
-            "description": "A dazzling musical performance featuring popular songs.",
-            "date": "2024-11-20",
-            "location": "Chicago Theatre",
-            "total_tickets": 400,
-            "available_tickets": 400,
-            "category": 3,
-            "price": "60.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 24,
+        "pk": 7,
         "fields": {
             "title": "Experimental Theatre",
             "description": "An avant-garde theatre production with experimental elements.",
@@ -337,49 +99,21 @@
     },
     {
         "model": "events.event",
-        "pk": 25,
+        "pk": 8,
         "fields": {
-            "title": "Classical Ballet",
-            "description": "A classical ballet performance by renowned dancers.",
-            "date": "2024-10-30",
-            "location": "Los Angeles Ballet Theatre",
-            "total_tickets": 200,
-            "available_tickets": 200,
-            "category": 3,
-            "price": "70.00"
+            "title": "Marathon Race",
+            "description": "Annual marathon race with participants from around the world.",
+            "date": "2024-09-25",
+            "location": "Chicago City Streets",
+            "total_tickets": 5000,
+            "available_tickets": 5000,
+            "category": 1,
+            "price": "50.00"
         }
     },
     {
         "model": "events.event",
-        "pk": 26,
-        "fields": {
-            "title": "Improvisational Theatre",
-            "description": "A lively improvisational theatre performance.",
-            "date": "2024-11-15",
-            "location": "Dallas Comedy Club",
-            "total_tickets": 180,
-            "available_tickets": 180,
-            "category": 3,
-            "price": "30.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 27,
-        "fields": {
-            "title": "Pantomime Show",
-            "description": "A family-friendly pantomime show with comedic elements.",
-            "date": "2024-12-20",
-            "location": "Boston Family Theatre",
-            "total_tickets": 350,
-            "available_tickets": 350,
-            "category": 3,
-            "price": "40.00"
-        }
-    },
-    {
-        "model": "events.event",
-        "pk": 28,
+        "pk": 9,
         "fields": {
             "title": "One-Act Plays Festival",
             "description": "A festival showcasing a variety of one-act plays.",
@@ -393,30 +127,296 @@
     },
     {
         "model": "events.event",
-        "pk": 29,
+        "pk": 10,
         "fields": {
-            "title": "Historical Drama",
-            "description": "A drama depicting a significant historical event.",
-            "date": "2024-11-25",
-            "location": "Philadelphia Historical Theatre",
+            "title": "Indie Music Showcase",
+            "description": "Showcase of indie bands and solo artists.",
+            "date": "2024-11-15",
+            "location": "Seattle Music Hall",
+            "total_tickets": 1500,
+            "available_tickets": 1500,
+            "category": 2,
+            "price": "45.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 11,
+        "fields": {
+            "title": "International Swimming Meet",
+            "description": "Competitive swimming meet with international swimmers.",
+            "date": "2024-11-20",
+            "location": "Dallas Aquatic Center",
+            "total_tickets": 3500,
+            "available_tickets": 3500,
+            "category": 1,
+            "price": "40.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 12,
+        "fields": {
+            "title": "Vocal Performance",
+            "description": "An enchanting evening of vocal performances by renowned singers.",
+            "date": "2024-12-02",
+            "location": "Los Angeles Opera House",
+            "total_tickets": 1000,
+            "available_tickets": 1000,
+            "category": 3,
+            "price": "50.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 13,
+        "fields": {
+            "title": "Blues Music Festival",
+            "description": "A festival celebrating blues music with live performances.",
+            "date": "2024-10-10",
+            "location": "New Orleans Jazz Club",
+            "total_tickets": 3000,
+            "available_tickets": 3000,
+            "category": 2,
+            "price": "65.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 14,
+        "fields": {
+            "title": "Rugby World Cup",
+            "description": "The finals of the Rugby World Cup.",
+            "date": "2024-10-25",
+            "location": "San Francisco Stadium",
+            "total_tickets": 7000,
+            "available_tickets": 7000,
+            "category": 1,
+            "price": "70.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 15,
+        "fields": {
+            "title": "Film Festival",
+            "description": "A showcase of independent films from around the world.",
+            "date": "2024-12-20",
+            "location": "New York City Film Center",
+            "total_tickets": 800,
+            "available_tickets": 800,
+            "category": 3,
+            "price": "20.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 16,
+        "fields": {
+            "title": "Shakespearean Play",
+            "description": "A performance of Shakespeare's classic play.",
+            "date": "2024-09-10",
+            "location": "London Theatre",
             "total_tickets": 300,
             "available_tickets": 300,
             "category": 3,
-            "price": "55.00"
+            "price": "40.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 17,
+        "fields": {
+            "title": "Golf Championship",
+            "description": "Annual golf championship with international participants.",
+            "date": "2024-12-15",
+            "location": "Orlando Golf Course",
+            "total_tickets": 2000,
+            "available_tickets": 2000,
+            "category": 1,
+            "price": "75.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 18,
+        "fields": {
+            "title": "Art Expo",
+            "description": "A showcase of local and international art.",
+            "date": "2024-11-01",
+            "location": "Miami Art Gallery",
+            "total_tickets": 500,
+            "available_tickets": 500,
+            "category": 3,
+            "price": "60.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 19,
+        "fields": {
+            "title": "Indie Film Night",
+            "description": "Screening of award-winning indie films.",
+            "date": "2024-10-30",
+            "location": "Los Angeles Indie Theatre",
+            "total_tickets": 200,
+            "available_tickets": 200,
+            "category": 3,
+            "price": "15.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 20,
+        "fields": {
+            "title": "Country Music Festival",
+            "description": "A weekend festival featuring top country music artists.",
+            "date": "2024-11-12",
+            "location": "Nashville Fairgrounds",
+            "total_tickets": 3000,
+            "available_tickets": 3000,
+            "category": 2,
+            "price": "80.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 21,
+        "fields": {
+            "title": "Salsa Dance Night",
+            "description": "An exciting evening of salsa dancing and performances.",
+            "date": "2024-09-20",
+            "location": "Miami Salsa Club",
+            "total_tickets": 250,
+            "available_tickets": 250,
+            "category": 2,
+            "price": "25.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 22,
+        "fields": {
+            "title": "Photography Workshop",
+            "description": "Hands-on photography workshop for beginners.",
+            "date": "2024-10-28",
+            "location": "Chicago Art School",
+            "total_tickets": 20,
+            "available_tickets": 20,
+            "category": 3,
+            "price": "100.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 23,
+        "fields": {
+            "title": "Rock Climbing Competition",
+            "description": "National rock climbing competition with top climbers.",
+            "date": "2024-11-08",
+            "location": "Denver Climbing Gym",
+            "total_tickets": 500,
+            "available_tickets": 500,
+            "category": 1,
+            "price": "40.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 24,
+        "fields": {
+            "title": "Street Art Tour",
+            "description": "Guided tour exploring the best street art in the city.",
+            "date": "2024-10-02",
+            "location": "Los Angeles Downtown",
+            "total_tickets": 30,
+            "available_tickets": 30,
+            "category": 3,
+            "price": "20.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 25,
+        "fields": {
+            "title": "World Cup Qualifiers",
+            "description": "Exciting matches leading to the World Cup finals.",
+            "date": "2024-11-22",
+            "location": "Toronto Stadium",
+            "total_tickets": 12000,
+            "available_tickets": 12000,
+            "category": 1,
+            "price": "60.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 26,
+        "fields": {
+            "title": "Community Play Day",
+            "description": "A day filled with fun activities for the whole family.",
+            "date": "2024-09-18",
+            "location": "City Community Park",
+            "total_tickets": 500,
+            "available_tickets": 500,
+            "category": 3,
+            "price": "10.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 27,
+        "fields": {
+            "title": "Charity Gala",
+            "description": "Annual charity gala to raise funds for local projects.",
+            "date": "2024-10-15",
+            "location": "Chicago Convention Center",
+            "total_tickets": 300,
+            "available_tickets": 300,
+            "category": 3,
+            "price": "200.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 28,
+        "fields": {
+            "title": "Tech Conference",
+            "description": "Annual tech conference showcasing new innovations.",
+            "date": "2024-12-01",
+            "location": "San Francisco Tech Hub",
+            "total_tickets": 1000,
+            "available_tickets": 1000,
+            "category": 3,
+            "price": "150.00"
+        }
+    },
+    {
+        "model": "events.event",
+        "pk": 29,
+        "fields": {
+            "title": "Fitness Expo",
+            "description": "Expo showcasing fitness products and services.",
+            "date": "2024-11-05",
+            "location": "Miami Convention Center",
+            "total_tickets": 2000,
+            "available_tickets": 2000,
+            "category": 1,
+            "price": "25.00"
         }
     },
     {
         "model": "events.event",
         "pk": 30,
         "fields": {
-            "title": "Romantic Comedy",
-            "description": "A light-hearted romantic comedy performance.",
-            "date": "2024-12-15",
-            "location": "Orlando Main Stage",
-            "total_tickets": 500,
-            "available_tickets": 500,
+            "title": "Classic Movie Night",
+            "description": "Screening of classic films from the golden era of cinema.",
+            "date": "2024-10-28",
+            "location": "Los Angeles Classic Theatre",
+            "total_tickets": 400,
+            "available_tickets": 400,
             "category": 3,
-            "price": "45.00"
+            "price": "12.00"
         }
     }
 ]

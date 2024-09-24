@@ -32,10 +32,10 @@
                             <option value="reset" {% if current_sorting == "None_None" %}selected{% endif %}>Sort by...</option>
                             <option value="date_asc" {% if current_sorting == "date_asc" %}selected{% endif %}>Date (earliest to latest)</option>
                             <option value="date_desc" {% if current_sorting == "date_desc" %}selected{% endif %}>Date (latest to earliest)</option>
-                            <option value="category_asc" {% if current_sorting == "category_asc" %}selected{% endif %}>Category (A-Z)</option>
-                            <option value="category_desc" {% if current_sorting == "category_desc" %}selected{% endif %}>Category (Z-A)</option>
+                            <option value="price_asc" {% if current_sorting == "price_asc" %}selected{% endif %}>Price (low to high)</option>
+                            <option value="price_desc" {% if current_sorting == "price_desc" %}selected{% endif %}>Price (high to low)</option>
                         </select>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="col-12 col-md-6 order-md-first">
                     <p class="text-muted mt-3 text-center text-md-left">

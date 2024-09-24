@@ -37,7 +37,9 @@
                     </div>
                     <button type="submit" class="btn btn-black">Book Now</button>
                 </form>
-
+                
+                <a href="{% url 'all_events' %}" class="btn btn-black mb-3">Back</a>
+                
                 {% if event.is_sold_out %}
                 <p class="text-danger">Sold Out</p>
                 {% endif %}
