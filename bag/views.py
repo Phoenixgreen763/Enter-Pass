@@ -3,17 +3,16 @@ from django.shortcuts import render, redirect, reverse, HttpResponse, get_object
 from django.contrib import messages
 from events.models import Event  
 
+
 def view_bag(request):
     """ A view that renders the bag contents page """
     bag = request.session.get('bag', {})
     bag_items = []
-    total = Decimal('0.00')  # Initialize as Decimal
-
+    
     for item_id, quantity in bag.items():
         try:
             event = Event.objects.get(pk=item_id)  # Fetch the event by ID
             subtotal = event.price * quantity  # Calculate subtotal for this item
-            total += subtotal  # Total is now a Decimal
             bag_items.append({
                 'event': event,
                 'quantity': quantity,
@@ -24,15 +23,15 @@ def view_bag(request):
             messages.error(request, f'Event with ID {item_id} does not exist.')
 
     # Set total without delivery cost
-    grand_total = total  # Ensure both are Decimal
+    grand_total = calculate_grand_total(bag)  # Use the helper function
 
     context = {
         'bag_items': bag_items,
-        'total': total,
         'grand_total': grand_total,
     }
 
     return render(request, 'bag/bag.html', context)
+
 
 def add_to_bag(request, item_id):
     """ Add a quantity of the specified event to the shopping bag """
@@ -99,3 +98,16 @@ def remove_from_bag(request, item_id):
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
+    
+
+def calculate_grand_total(bag):
+    """Calculate the grand total for the shopping bag."""
+    total = Decimal('0.00')  # Initialize as Decimal
+    for item_id, quantity in bag.items():
+        try:
+            event = Event.objects.get(pk=item_id)  # Fetch the event by ID
+            subtotal = event.price * quantity  # Calculate subtotal for this item
+            total += subtotal  # Total is now a Decimal
+        except Event.DoesNotExist:
+            pass  # Optionally log this error or handle it in some way
+    return total
