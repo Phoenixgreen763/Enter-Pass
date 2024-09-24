@@ -81,6 +81,7 @@ def event_detail(request, event_id):
 
 
 def edit_event(request, event_id):
+    """ Edit an event in the store """
     event = get_object_or_404(Event, id=event_id)
 
     if request.method == 'POST':
@@ -92,3 +93,11 @@ def edit_event(request, event_id):
         form = EventForm(instance=event)
 
     return render(request, 'events/edit_event.html', {'form': form, 'event': event})
+
+
+def delete_event(request, event_id):
+    """ Delete an event from the store """
+    event = get_object_or_404(Event, pk=event_id)
+    event.delete()
+    messages.success(request, 'Event deleted!')
+    return redirect(reverse('all_events'))

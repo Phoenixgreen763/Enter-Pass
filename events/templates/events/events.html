@@ -80,8 +80,8 @@
                                         {% endif %}
                                         {% if request.user.is_superuser %}
                                             <small class="ml-3">
-                                                <a href="{% url 'edit_event' event.id %}">Edit</a> |
-                                                <a class="text-danger" href="">Delete</a>
+                                                <a href="{% url 'edit_event' event.id %}" class="btn btn-sm btn-primary">Edit</a>
+                                                <a href="{% url 'delete_event' event.id %}" class="btn btn-sm btn-danger">Delete</a>
                                             </small>
                                         {% endif %}
                                     </div>
