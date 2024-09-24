@@ -118,6 +118,10 @@ body {
     text-decoration: none;
 }
 
+.book-button {
+    margin-bottom: 1%;
+}
+
 input[name='q']::placeholder {
     color: #aab7c4;
 }
