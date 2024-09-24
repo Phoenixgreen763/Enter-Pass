@@ -39,11 +39,11 @@
                             {% for item in bag_items %}
                                 <tr>
                                     <td class="p-3 w-25">
-                                        {% if item.event.image %}
-                                            <img class="img-fluid rounded" src="{{ item.event.image.url }}" alt="{{ item.event.title }}">
-                                        {% else %}
-                                            <img class="img-fluid rounded" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.event.title }}">
-                                        {% endif %}
+                                    {% if item.event.category.image %}
+                                        <img src="{{ item.event.category.image.url }}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
+                                    {% else %}
+                                        <img src="{% static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
+                                    {% endif %}
                                     </td>
                                     <td class="py-3">
                                         <p class="my-0"><strong>{{ item.event.title }}</strong></p>
