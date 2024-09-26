@@ -59,6 +59,11 @@
                     </div>
 
                     {% for item in order.lineitems.all %}
+                    <div class="row"></div>
+                        <div class="col-12 col-md-8 text-md-right">
+                            <p class="small mb-0">{{ item.title }}</p>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-12 col-md-8 text-md-right">
                             <p class="small mb-0">{{ item.quantity }} @ ${{ item.event.price }} each</p>
