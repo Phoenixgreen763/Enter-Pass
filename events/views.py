@@ -87,7 +87,7 @@ def add_event(request):
         if form.is_valid():
             event = form.save()
             messages.success(request, 'Successfully added Event!')
-            return redirect(reverse('product_detail', args=[event.id]))
+            return redirect(reverse('event_detail', args=[event.id]))
         else:
             messages.error(request, 'Failed to add Event. Please ensure the form is valid.')
     else:
