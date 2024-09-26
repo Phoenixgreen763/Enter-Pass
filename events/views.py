@@ -80,6 +80,27 @@ def event_detail(request, event_id):
     return render(request, 'events/event_detail.html', context)
 
 
+def add_event(request):
+  
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid():
+            event = form.save()
+            messages.success(request, 'Successfully added Event!')
+            return redirect(reverse('product_detail', args=[event.id]))
+        else:
+            messages.error(request, 'Failed to add Event. Please ensure the form is valid.')
+    else:
+        form = EventForm()
+        
+    template = 'events/add_event.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
+
+
 def edit_event(request, event_id):
     """ Edit an event in the store """
     event = get_object_or_404(Event, id=event_id)
