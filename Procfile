@@ -1,1 +1,1 @@
-web: gunicorn enter-pass.wsgi --log-file -
+web: gunicorn enterpass.wsgi --log-file -
