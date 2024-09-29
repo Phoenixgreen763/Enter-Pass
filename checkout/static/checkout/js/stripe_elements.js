@@ -74,11 +74,6 @@ form.addEventListener('submit', function(ev) {
                     email: $.trim(form.email.value),
                 }
             },
-            shipping: {
-                name: $.trim(form.full_name.value),
-                phone: $.trim(form.phone_number.value),
-                email: $.trim(form.email.value),
-            },
         }).then(function(result) {
             if (result.error) {
                 var errorDiv = document.getElementById('card-errors');
