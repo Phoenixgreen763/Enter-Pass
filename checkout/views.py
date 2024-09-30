@@ -9,6 +9,7 @@ import logging
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from events.models import Event
+from profiles.models import UserProfile  # Import UserProfile to link orders
 from bag.contexts import bag_contents
 
 # Set up logging
@@ -55,7 +56,12 @@ def checkout(request):
 
         if order_form.is_valid():
             order = order_form.save(commit=False)
-            pid = client_secret.split('_secret')[0]  # Safe now since we checked client_secret
+
+            # Get or create the user profile
+            user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+            order.user_profile = user_profile  # Associate the order with the user profile
+
+            pid = client_secret.split('_secret')[0] 
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
             order.save()
