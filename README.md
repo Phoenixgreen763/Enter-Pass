@@ -54,8 +54,6 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ![Event Detail](/static/images/event-detail.png)
 
-
-
 ### Core features
 
 * Event creation and management functionality for organizers
@@ -106,6 +104,14 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ## Design
 
+* Fonts
+    * All fonts were from google.
+
+* Color 
+    
+* Images
+    * A background image of an event was used on the homepage to set the tone and theme of the site, creating an immersive visual experience.
+    * Category images were assigned to each event category. These are displayed as banners on the main Events page and are also featured on the individual Event Details pages, providing visual consistency throughout the site.
 
 ## Deployment Of The Website
 
