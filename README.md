@@ -119,6 +119,18 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ## Code testing
 
+* Code testing was conducted during the build process of the project to ensure that the application is robust, reliable, and free from critical bugs. The following methodologies and tools were employed during the testing process:
+
+* Unit Testing
+    * Unit tests were created to verify the functionality of individual components and functions within the codebase. These tests check specific logic and ensure that each unit behaves as expected.
+
+* Integration Testing
+    * Integration tests were performed to verify that different modules of the application work together correctly. These tests ensure that data flows as expected between various parts of the application, such as user authentication and event management features.
+
+* Static Code Analysis
+    * Static code analysis tools were used to detect potential issues in the code without executing it. Tools like Pylint or Flake8 were employed to identify code smells, style violations, and potential bugs, enhancing code quality.
+
+* Through these testing methods, we ensured that the codebase is reliable, maintainable, and performs well under various conditions.
 
 ## Validator Testing 
 
