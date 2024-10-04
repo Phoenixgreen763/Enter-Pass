@@ -99,6 +99,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
     * Upon successful payment, the user will be redirected to a success page.
     * This page will display an order summary, including a unique order ID that confirms the transaction.
     * The summary will show the user information entered into the checkout form, ensuring accuracy and transparency.
+    * Below the order summary there is a button, stating "check out more events" to allow users to return to the events page.
     * Additionally, the user will receive a confirmation message indicating that the order details will be sent to the email address provided during checkout.
 
 ![Checkout Confirmation](/static/images/order-confirmation.png)
