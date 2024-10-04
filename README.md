@@ -105,9 +105,13 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 ## Design
 
 * Fonts
-    * All fonts were from google.
+    * All fonts were sourced from Google Fonts.
 
 * Color 
+    * The majority of the pages and text are in black and white, providing a clean and minimalist look.
+    * Colorful images are used for events to create visual interest, as a contrast to the minimalist desgin everwhere else.
+    * Buttons are styled in red and blue for emphasis and interaction.
+    * Green text is used for pricing information, making it stand out for users.
     
 * Images
     * A background image of an event was used on the homepage to set the tone and theme of the site, creating an immersive visual experience.
@@ -136,7 +140,7 @@ The live link can be found here - https://enter-pass-37670ea809e0.herokuapp.com
 ## Credits
 
 * Code
-    * Templates for some html, such as allauth templates were used from the Boutique Ado module.
+    * Templates for some HTML, such as the allauth templates, were utilized from the Boutique Ado module.
 
 * Content
     * All content was written by the developer
