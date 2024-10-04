@@ -20,6 +20,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ![Home Page](/static/images/homepage.png)
 
+
 * Navbar 
     * The navbar is present on all pages of the site, and includes a number of features for users, and admins.
     * It includes the site heading, clicking on the site title instantly redirects users back to the homepage, providing a quick way to return.
@@ -35,6 +36,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ![Navbar](/static/images/navbar.png)
 
+
 * Events
     * The Events page showcases all available events and provides users with powerful filtering options to refine their search.
     * Each event is displayed with key details, including a category banner image, the event title, location, available tickets, and pricing, giving users a comprehensive overview at a glance.
@@ -44,10 +46,11 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
         * Dropdown Filter: this feature lets users sort events by date or price. The dropdown allows for both ascending and descending order, offering flexibility in how events are displayed.
         ![Dropdown Filter](/static/images/dropdown-filter.png)
     * Admin users have additional controls with edit and delete buttons available under each event, enabling them to easily manage event listings.
-    
+
     ![Admin Event Buttons](/static/images/admin-events.png)
 
 ![Events Page](/static/images/events.png)
+
 
 * Event Detail Page
     * When a user clicks on any event, they are taken to the Event Detail Page, which provides detailed information about that specific event.
@@ -57,6 +60,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
         * Back Button: This provides a convenient way to return to the previous Events page, helping users seamlessly navigate back to continue browsing.
 
 ![Event Detail](/static/images/event-detail.png)
+
 
 * Bag 
     * If a user clicks the bag icon on the navbar, the toast messages that appear. They will be redirected to the bag page.
@@ -77,6 +81,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ![Bag](/static/images/bag.png)
 
+
 * Checkout 
     * If users are satisfied with the items in their bag, they can proceed to a secure checkout.
     * The checkout page provides a summary of the order, allowing users to review their selected items.
@@ -88,6 +93,15 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
     * Additionally, there is an option on the form to save your information to your profile for future transactions, providing convenience for repeat users.
 
 ![Checkout](/static/images/checkout.png)
+
+
+* Checkout Confirmation 
+    * Upon successful payment, the user will be redirected to a success page.
+    * This page will display an order summary, including a unique order ID that confirms the transaction.
+    * The summary will show the user information entered into the checkout form, ensuring accuracy and transparency.
+    * Additionally, the user will receive a confirmation message indicating that the order details will be sent to the email address provided during checkout.
+
+![Checkout Confirmation](/static/images/order-confirmation.png)
 
 ### Core features
 
