@@ -40,8 +40,11 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
     * Each event is displayed with key details, including a category banner image, the event title, location, available tickets, and pricing, giving users a comprehensive overview at a glance.
     * Users can refine their search using two filtering options:
         * Category Filter: located at the top of the event list, this filter allows users to narrow down their results by selecting specific categories, ensuring they find events that match their interests.
+        ![Categroy Filter](/static/images/category-filter.png)
         * Dropdown Filter: this feature lets users sort events by date or price. The dropdown allows for both ascending and descending order, offering flexibility in how events are displayed.
+        ![Dropdown Filter](/static/images/dropdown-filter.png)
     * Admin users have additional controls with edit and delete buttons available under each event, enabling them to easily manage event listings.
+    ![Admin Event Buttons](/static/images/admin-events.png)
 
 ![Events Page](/static/images/events.png)
 
@@ -62,7 +65,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
     * When a user adds an event to the shopping bag, the event will be displayed on the bag page, including key information and the total price of all items in the bag.
     * Each item will display a subtotal, along with a grand total for all items in the shopping bag.
-    
+
         ![Bag Items](/static/images/bag-items.png)
 
     * Users have the ability to adjust the number of tickets for each specific event, and can either update that item or delete it entirely from the bag.
@@ -72,6 +75,18 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
     * Additionally, users will see options to either continue shopping or proceed to a secure bag page.
 
 ![Bag](/static/images/bag.png)
+
+* Checkout 
+    * If users are satisfied with the items in their bag, they can proceed to a secure checkout.
+    * The checkout page provides a summary of the order, allowing users to review their selected items.
+    * Users will find a form to fill out their details, such as email and phone number, to ensure they receive their tickets.
+    * The form will also prompt users to enter their card details to complete the purchase. Below the form, a warning message will inform users that their card will be charged, along with the total amount.
+    * At the bottom of the form, users have two options:
+        * Complete Payment - Finalize their order and proceed with the purchase.
+        * Adjust Bag - Redirect them back to their shopping bag, allowing them to make any necessary changes to their items.
+    * Additionally, there is an option on the form to save your information to your profile for future transactions, providing convenience for repeat users.
+
+![Checkout](/static/images/checkout.png)
 
 ### Core features
 
