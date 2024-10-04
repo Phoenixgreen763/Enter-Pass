@@ -54,6 +54,25 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ![Event Detail](/static/images/event-detail.png)
 
+* Bag 
+    * If a user clicks the bag icon on the navbar, the toast messages that appear. They will be redirected to the bag page.
+    * If the shopping bag is empty, the user will receive a notification message indicating this, along with a button that redirects them to the Events page to browse available tickets.
+
+        ![Empty Bag](/static/images/empty-bag.png)
+
+    * When a user adds an event to the shopping bag, the event will be displayed on the bag page, including key information and the total price of all items in the bag.
+    * Each item will display a subtotal, along with a grand total for all items in the shopping bag.
+    
+        ![Bag Items](/static/images/bag-items.png)
+
+    * Users have the ability to adjust the number of tickets for each specific event, and can either update that item or delete it entirely from the bag.
+
+        ![Bag Buttons](/static/images/bag-buttons.png)
+
+    * Additionally, users will see options to either continue shopping or proceed to a secure bag page.
+
+![Bag](/static/images/bag.png)
+
 ### Core features
 
 * Event creation and management functionality for organizers
