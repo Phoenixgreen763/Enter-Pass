@@ -89,6 +89,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ## Testing
 
+* Multiple testing methods were employed to ensure the site functions as intended and that users do not encounter errors or potential bugs that could impact their experience. 
 
 ## Manual Testing
 
