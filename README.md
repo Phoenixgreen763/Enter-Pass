@@ -44,6 +44,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
         * Dropdown Filter: this feature lets users sort events by date or price. The dropdown allows for both ascending and descending order, offering flexibility in how events are displayed.
         ![Dropdown Filter](/static/images/dropdown-filter.png)
     * Admin users have additional controls with edit and delete buttons available under each event, enabling them to easily manage event listings.
+    
     ![Admin Event Buttons](/static/images/admin-events.png)
 
 ![Events Page](/static/images/events.png)
