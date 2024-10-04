@@ -103,6 +103,17 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ![Checkout Confirmation](/static/images/order-confirmation.png)
 
+
+* User Profiles
+    * When a user is logged in and selects "My Account", they will be redirected to their personal profile page.
+    * This page allows users to update their information as needed and view their order history.
+    * The order history is displayed on the right side of the page, alongside the user's personal information.
+    * Each unique order is listed, showing essential details such as the order number, order date/time, and total cost.
+    * This feature enables users to easily navigate through their orders, providing quick access in case they need details for an event or encounter any technical issues regarding their purchase.
+
+![User Profile](/static/images/profile.png)
+
+
 ### Core features
 
 * Event creation and management functionality for organizers
