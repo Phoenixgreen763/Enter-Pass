@@ -130,6 +130,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ## All Known Bugs
 
+* No known bugs have been found present at this point.
 
 ## Design
 
