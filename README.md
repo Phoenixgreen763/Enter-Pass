@@ -67,6 +67,11 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ### Features to Implement
 
+* Advanced Search and Filtering Options
+    * Enhance the search functionality to include more filtering options, such as date ranges, price ranges, and location-specific filters, making it easier for users to find events that suit their preferences.
+
+* Social Media Integration
+    * Integrate social media sharing options, allowing users to share their favorite events on platforms like Facebook, Twitter, and Instagram to increase visibility and engagement.
 
 ## User Stories
 
@@ -87,6 +92,30 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ## Manual Testing
 
+* Manual testing was conducted to ensure that all features of the application function as intended. The following steps were taken during the testing process:
+
+* Functional Testing
+    * Each feature was tested for functionality, including user registration, login/logout, event browsing, ticket booking, and payment processing. All functionalities performed as expected without errors.
+
+* User Interface Testing
+    * The website’s layout and design were reviewed across different devices and screen sizes to ensure responsiveness and usability. Elements such as buttons, images, and text were checked for clarity and proper alignment.
+
+* Input Validation Testing
+    * User input fields (e.g., registration forms, search bars) were tested with valid and invalid data to ensure proper validation messages are displayed. This confirmed that users receive appropriate feedback for incorrect inputs.
+
+* Navigation Testing
+    * The navigation flow was tested by clicking through various links and buttons to ensure that all pages load correctly and that users can navigate seamlessly throughout the site.
+
+* Performance Testing
+    * The loading speed of the website was assessed to ensure that pages load quickly and efficiently, providing a positive user experience.
+
+* Cross-Browser Testing
+    * The application was tested across multiple web browsers (e.g., Chrome, Firefox, Safari) to ensure consistent performance and appearance.
+
+* Accessibility Testing
+    * Accessibility features were evaluated to ensure the website is usable for individuals with disabilities, including proper use of alt text for images and keyboard navigability.
+
+* By performing these manual tests, we ensured that the application meets the required quality standards and provides a seamless experience for users.
 
 ## Code testing
 
