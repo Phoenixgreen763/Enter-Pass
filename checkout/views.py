@@ -47,10 +47,11 @@ def checkout(request):
             messages.error(request, 'Client secret is required for payment processing.')
             return redirect(reverse('view_bag'))
 
-        order_form = OrderForm(request.POST) 
+        order_form = OrderForm(request.POST)
 
         if order_form.is_valid():
             order = order_form.save(commit=False)
+
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
             order.user_profile = user_profile
 
@@ -79,14 +80,14 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
 
-            # Promo code logic
+            # Apply promo code logic
             promo_code = order_form.cleaned_data.get('promo_code')
-            discount_amount = 0  # Initialize discount amount
+            discount_amount = 0
             
             if promo_code:
                 try:
                     promo = PromoCode.objects.get(code=promo_code, active=True)
-                    order.promo_code = promo  # Save promo code to the order
+                    order.promo_code = promo  # Save the promo code to the order
                     discount_amount = (promo.discount_percentage / 100) * total  # Calculate discount
                     messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
                 except PromoCode.DoesNotExist:
@@ -94,12 +95,12 @@ def checkout(request):
 
             # Apply discount to total
             total -= discount_amount 
-            total = max(0, total)  # Ensure total doesn't go negative
+            total = max(0, total)  # Ensure total is not negative
             order.order_total = total  
             order.grand_total = total  
             order.save()
 
-            stripe_total = round(total * 100)  # Stripe requires amount in cents
+            stripe_total = round(total * 100)  # Stripe expects amounts in cents
 
             try:
                 intent = stripe.PaymentIntent.create(
