@@ -57,9 +57,9 @@ def checkout(request):
         if order_form.is_valid():
             order = order_form.save(commit=False)
 
-            # Get or create the user profile
+            
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-            order.user_profile = user_profile  # Associate the order with the user profile
+            order.user_profile = user_profile  
 
             pid = client_secret.split('_secret')[0]
             order.stripe_pid = pid
@@ -72,7 +72,7 @@ def checkout(request):
             if promo_code_input:
                 try:
                     promo_code = PromoCode.objects.get(code=promo_code_input, active=True)
-                    discount_amount = promo_code.discount_value  
+                    discount_amount = (promo_code.discount_percentage / 100) * total  # Calculate discount amount
                     messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
                 except PromoCode.DoesNotExist:
                     messages.error(request, "Invalid or expired promo code.")
@@ -90,7 +90,7 @@ def checkout(request):
                             quantity=item_data,
                         )
                         order_line_item.save()
-                        total += event.price * item_data  # Calculate total before discount
+                        total += event.price * item_data  
                 except Event.DoesNotExist:
                     messages.error(request, (
                         "One of the Events in your bag wasn't found in our database. "
@@ -99,10 +99,11 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
 
-            # Apply discount to total
-            total -= discount_amount  # Adjust total with discount
-            order.order_total = total  # Save the updated order total
-            order.grand_total = total  # Update grand total if needed
+            
+            total -= discount_amount 
+            total = max(0, total)  # Ensure total does not go negative
+            order.order_total = total  
+            order.grand_total = total  
             order.save()
 
             request.session['save_info'] = 'save-info' in request.POST
