@@ -2,6 +2,15 @@ from django import forms
 from .models import Order
 
 class OrderForm(forms.ModelForm):
+    stripe_coupon_code = forms.CharField(
+        required=False,
+        max_length=20,
+        label='Coupon Code',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Enter coupon code',
+            'class': 'stripe-style-input',
+        })
+    )
 
     class Meta:
         model = Order
