@@ -35,8 +35,6 @@ def view_bag(request):
 
     return render(request, 'bag/bag.html', context)
 
-
-
 def add_to_bag(request, item_id):
     """ Add a quantity of the specified event to the shopping bag """
     if request.method == "POST":
@@ -102,7 +100,6 @@ def remove_from_bag(request, item_id):
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
-    
 
 def calculate_grand_total(bag):
     """Calculate the grand total for the shopping bag."""
