@@ -57,29 +57,19 @@ def checkout(request):
         if order_form.is_valid():
             order = order_form.save(commit=False)
 
-            
+            # Get or create user profile
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-            order.user_profile = user_profile  
+            order.user_profile = user_profile
 
             pid = client_secret.split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
 
-            # Promo code logic
-            promo_code_input = request.POST.get('promo_code', '').strip()  
+            # Initialize total and discount_amount
+            total = 0
             discount_amount = 0
 
-            if promo_code_input:
-                try:
-                    promo_code = PromoCode.objects.get(code=promo_code_input, active=True)
-                    discount_amount = (promo_code.discount_percentage / 100) * total  # Calculate discount amount
-                    messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
-                except PromoCode.DoesNotExist:
-                    messages.error(request, "Invalid or expired promo code.")
-
-            order.save()
-            total = 0
-            
+            # Calculate total from the bag
             for item_id, item_data in bag.items():
                 try:
                     event = Event.objects.get(id=item_id)
@@ -90,7 +80,7 @@ def checkout(request):
                             quantity=item_data,
                         )
                         order_line_item.save()
-                        total += event.price * item_data  
+                        total += event.price * item_data
                 except Event.DoesNotExist:
                     messages.error(request, (
                         "One of the Events in your bag wasn't found in our database. "
@@ -99,17 +89,45 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
 
-            
+            # Promo code logic
+            promo_code_input = request.POST.get('promo_code', '').strip()
+
+            if promo_code_input:
+                try:
+                    promo_code = PromoCode.objects.get(code=promo_code_input, active=True)
+                    discount_amount = (promo_code.discount_percentage / 100) * total  # Calculate discount amount
+                    messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
+                except PromoCode.DoesNotExist:
+                    messages.error(request, "Invalid or expired promo code.")
+
+            # Apply discount to total
             total -= discount_amount 
             total = max(0, total)  # Ensure total does not go negative
             order.order_total = total  
             order.grand_total = total  
             order.save()
 
+            # Create a PaymentIntent
+            stripe_total = round(total * 100)  # Stripe requires the amount in cents
+
+            try:
+                intent = stripe.PaymentIntent.create(
+                    amount=stripe_total,
+                    currency=settings.STRIPE_CURRENCY,
+                )
+                order.stripe_pid = intent.id
+                order.save()
+            except Exception as e:
+                logger.error(f"Stripe PaymentIntent creation error: {e}")
+                messages.error(request, 'There was an issue with the payment processing.')
+                return redirect(reverse('view_bag'))
+
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
+
         else:
             messages.error(request, 'There was an error with your form. Please double-check your information.')
+
     else:
         bag = request.session.get('bag', {})
         if not bag:
@@ -118,7 +136,7 @@ def checkout(request):
 
         current_bag = bag_contents(request)
         total = current_bag['grand_total']
-        stripe_total = round(total * 100)
+        stripe_total = round(total * 100)  # Total amount in cents
         stripe.api_key = stripe_secret_key
 
         try:
@@ -143,6 +161,7 @@ def checkout(request):
     }
 
     return render(request, template, context)
+
 
 def checkout_success(request, order_number):
     """
