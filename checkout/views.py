@@ -84,14 +84,14 @@ def checkout(request):
             promo_code = order_form.cleaned_data.get('promo_code')
             discount_amount = 0
             
-            if promo_code:
-                try:
-                    promo = PromoCode.objects.get(code=promo_code, active=True)
-                    order.promo_code = promo  # Save the promo code to the order
-                    discount_amount = (promo.discount_percentage / 100) * total  # Calculate discount
-                    messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
-                except PromoCode.DoesNotExist:
-                    messages.error(request, "Invalid or expired promo code.")
+        if promo_code:
+            try:
+                promo = PromoCode.objects.get(code=promo_code, active=True)
+                order.promo_code = promo  # Save the promo code to the order
+                discount_amount = (promo.discount_percentage / 100) * total  # Calculate discount
+                messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
+            except PromoCode.DoesNotExist:
+                messages.error(request, "Invalid or expired promo code.")
 
             # Apply discount to total
             total -= discount_amount 
