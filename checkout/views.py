@@ -47,12 +47,11 @@ def checkout(request):
             messages.error(request, 'Client secret is required for payment processing.')
             return redirect(reverse('view_bag'))
 
-        order_form = OrderForm(request.POST)  # Use request.POST directly
+        order_form = OrderForm(request.POST) 
 
         if order_form.is_valid():
             order = order_form.save(commit=False)
-
-            # Get or create user profile
+            
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
             order.user_profile = user_profile
 
@@ -60,10 +59,8 @@ def checkout(request):
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
 
-            # Initialize total
             total = 0
 
-            # Calculate total from the bag
             for item_id, item_data in bag.items():
                 try:
                     event = Event.objects.get(id=item_id)
@@ -85,27 +82,25 @@ def checkout(request):
 
             # Promo code logic
             promo_code = order_form.cleaned_data.get('promo_code')
+            discount_amount = 0  
+            
             if promo_code:
                 try:
                     promo = PromoCode.objects.get(code=promo_code, active=True)
-                    order.promo_code = promo  # Save promo code to the order
+                    order.promo_code = promo  
                     discount_amount = (promo.discount_percentage / 100) * total
                     messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
                 except PromoCode.DoesNotExist:
                     messages.error(request, "Invalid or expired promo code.")
-                    discount_amount = 0  # No discount if promo code is invalid
-            else:
-                discount_amount = 0  # No discount if no promo code
 
             # Apply discount to total
             total -= discount_amount 
-            total = max(0, total)  # Ensure total does not go negative
+            total = max(0, total)  
             order.order_total = total  
             order.grand_total = total  
             order.save()
 
-            # Create a PaymentIntent
-            stripe_total = round(total * 100)  # Stripe requires the amount in cents
+            stripe_total = round(total * 100) 
 
             try:
                 intent = stripe.PaymentIntent.create(
@@ -133,7 +128,7 @@ def checkout(request):
 
         current_bag = bag_contents(request)
         total = current_bag['grand_total']
-        stripe_total = round(total * 100)  # Total amount in cents
+        stripe_total = round(total * 100) 
         stripe.api_key = stripe_secret_key
 
         try:
@@ -141,7 +136,7 @@ def checkout(request):
                 amount=stripe_total,
                 currency=settings.STRIPE_CURRENCY,
             )
-            order_form = OrderForm()  # Create a new order form for GET requests
+            order_form = OrderForm()  
         except Exception as e:
             logger.error(f"Stripe PaymentIntent creation error: {e}")
             messages.error(request, 'There was an issue with the payment processing.')
