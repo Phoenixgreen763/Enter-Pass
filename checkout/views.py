@@ -51,7 +51,6 @@ def checkout(request):
 
         if order_form.is_valid():
             order = order_form.save(commit=False)
-            
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
             order.user_profile = user_profile
 
@@ -82,30 +81,33 @@ def checkout(request):
 
             # Promo code logic
             promo_code = order_form.cleaned_data.get('promo_code')
-            discount_amount = 0  
+            discount_amount = 0  # Initialize discount amount
             
             if promo_code:
                 try:
                     promo = PromoCode.objects.get(code=promo_code, active=True)
-                    order.promo_code = promo  
-                    discount_amount = (promo.discount_percentage / 100) * total
+                    order.promo_code = promo  # Save promo code to the order
+                    discount_amount = (promo.discount_percentage / 100) * total  # Calculate discount
                     messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
                 except PromoCode.DoesNotExist:
                     messages.error(request, "Invalid or expired promo code.")
 
             # Apply discount to total
             total -= discount_amount 
-            total = max(0, total)  
+            total = max(0, total)  # Ensure total doesn't go negative
             order.order_total = total  
             order.grand_total = total  
             order.save()
 
-            stripe_total = round(total * 100) 
+            stripe_total = round(total * 100)  # Stripe requires amount in cents
 
             try:
                 intent = stripe.PaymentIntent.create(
                     amount=stripe_total,
                     currency=settings.STRIPE_CURRENCY,
+                    metadata={
+                        'order_number': order.order_number,
+                    }
                 )
                 order.stripe_pid = intent.id
                 order.save()
