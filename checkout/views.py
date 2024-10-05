@@ -7,9 +7,9 @@ import json
 import logging
 
 from .forms import OrderForm
-from .models import Order, OrderLineItem
+from .models import Order, OrderLineItem, PromoCode  
 from events.models import Event
-from profiles.models import UserProfile  # Import UserProfile to link orders
+from profiles.models import UserProfile  
 from bag.contexts import bag_contents
 
 # Set up logging
@@ -61,11 +61,25 @@ def checkout(request):
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
             order.user_profile = user_profile  # Associate the order with the user profile
 
-            pid = client_secret.split('_secret')[0] 
+            pid = client_secret.split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
-            order.save()
 
+            # Promo code logic
+            promo_code_input = request.POST.get('promo_code', '').strip()  
+            discount_amount = 0
+
+            if promo_code_input:
+                try:
+                    promo_code = PromoCode.objects.get(code=promo_code_input, active=True)
+                    discount_amount = promo_code.discount_value  
+                    messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
+                except PromoCode.DoesNotExist:
+                    messages.error(request, "Invalid or expired promo code.")
+
+            order.save()
+            total = 0
+            
             for item_id, item_data in bag.items():
                 try:
                     event = Event.objects.get(id=item_id)
@@ -76,6 +90,7 @@ def checkout(request):
                             quantity=item_data,
                         )
                         order_line_item.save()
+                        total += event.price * item_data  # Calculate total before discount
                 except Event.DoesNotExist:
                     messages.error(request, (
                         "One of the Events in your bag wasn't found in our database. "
@@ -83,6 +98,12 @@ def checkout(request):
                     )
                     order.delete()
                     return redirect(reverse('view_bag'))
+
+            # Apply discount to total
+            total -= discount_amount  # Adjust total with discount
+            order.order_total = total  # Save the updated order total
+            order.grand_total = total  # Update grand total if needed
+            order.save()
 
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
