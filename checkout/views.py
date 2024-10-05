@@ -7,9 +7,9 @@ import json
 import logging
 
 from .forms import OrderForm
-from .models import Order, OrderLineItem, PromoCode  
+from .models import Order, OrderLineItem
 from events.models import Event
-from profiles.models import UserProfile  
+from profiles.models import UserProfile  # Import UserProfile to link orders
 from bag.contexts import bag_contents
 
 # Set up logging
@@ -47,19 +47,24 @@ def checkout(request):
             messages.error(request, 'Client secret is required for payment processing.')
             return redirect(reverse('view_bag'))
 
-        order_form = OrderForm(request.POST)
+        form_data = {
+            'full_name': request.POST['full_name'],
+            'email': request.POST['email'],
+            'phone_number': request.POST['phone_number'],
+        }
+        order_form = OrderForm(form_data)
 
         if order_form.is_valid():
             order = order_form.save(commit=False)
 
+            # Get or create the user profile
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-            order.user_profile = user_profile
+            order.user_profile = user_profile  # Associate the order with the user profile
 
-            pid = client_secret.split('_secret')[0]
+            pid = client_secret.split('_secret')[0] 
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
-
-            total = 0
+            order.save()
 
             for item_id, item_data in bag.items():
                 try:
@@ -71,7 +76,6 @@ def checkout(request):
                             quantity=item_data,
                         )
                         order_line_item.save()
-                        total += event.price * item_data
                 except Event.DoesNotExist:
                     messages.error(request, (
                         "One of the Events in your bag wasn't found in our database. "
@@ -80,49 +84,10 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
 
-            # Apply promo code logic
-            promo_code = order_form.cleaned_data.get('promo_code')
-            discount_amount = 0
-            
-        if promo_code:
-            try:
-                promo = PromoCode.objects.get(code=promo_code, active=True)
-                order.promo_code = promo  # Save the promo code to the order
-                discount_amount = (promo.discount_percentage / 100) * total  # Calculate discount
-                messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
-            except PromoCode.DoesNotExist:
-                messages.error(request, "Invalid or expired promo code.")
-
-            # Apply discount to total
-            total -= discount_amount 
-            total = max(0, total)  # Ensure total is not negative
-            order.order_total = total  
-            order.grand_total = total  
-            order.save()
-
-            stripe_total = round(total * 100)  # Stripe expects amounts in cents
-
-            try:
-                intent = stripe.PaymentIntent.create(
-                    amount=stripe_total,
-                    currency=settings.STRIPE_CURRENCY,
-                    metadata={
-                        'order_number': order.order_number,
-                    }
-                )
-                order.stripe_pid = intent.id
-                order.save()
-            except Exception as e:
-                logger.error(f"Stripe PaymentIntent creation error: {e}")
-                messages.error(request, 'There was an issue with the payment processing.')
-                return redirect(reverse('view_bag'))
-
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
-
         else:
             messages.error(request, 'There was an error with your form. Please double-check your information.')
-
     else:
         bag = request.session.get('bag', {})
         if not bag:
@@ -131,7 +96,7 @@ def checkout(request):
 
         current_bag = bag_contents(request)
         total = current_bag['grand_total']
-        stripe_total = round(total * 100) 
+        stripe_total = round(total * 100)
         stripe.api_key = stripe_secret_key
 
         try:
@@ -139,7 +104,7 @@ def checkout(request):
                 amount=stripe_total,
                 currency=settings.STRIPE_CURRENCY,
             )
-            order_form = OrderForm()  
+            order_form = OrderForm()
         except Exception as e:
             logger.error(f"Stripe PaymentIntent creation error: {e}")
             messages.error(request, 'There was an issue with the payment processing.')
@@ -173,4 +138,4 @@ def checkout_success(request, order_number):
         'order': order,
     }
 
-    return render(request, template, context)
+    return render(request, template, context) 
