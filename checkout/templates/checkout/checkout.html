@@ -66,11 +66,7 @@
                         {{ order_form.full_name | as_crispy_field }}
                         {{ order_form.email | as_crispy_field }}
                         {{ order_form.phone_number | as_crispy_field }}
-                    </fieldset>
-                    <fieldset class="rounded px-3 mb-5">
-                        <legend class="fieldset-label small text-black px-2 w-auto">Promo Code:</legend>
-                        <input type="text" name="promo_code" class="form-control" placeholder="Enter promo code" value="{{ promo_code_input }}">
-                    </fieldset>                    
+                    </fieldset>                   
                     <fieldset class="rounded px-3 mb-5">
                         <div class="form-check form-check-inline float-right mr-0">
 							{% if user.is_authenticated %}
