@@ -30,12 +30,13 @@ class OrderForm(forms.ModelForm):
             self.fields[field].label = False
 
     def clean_promo_code(self):
-        """Validate the promo code."""
         promo_code = self.cleaned_data.get('promo_code')
         if promo_code:
             try:
                 promo = PromoCode.objects.get(code=promo_code, active=True)
-                return promo  
+                # Assuming you want to return some discount value
+                return promo.discount_value  # or any attribute that represents the discount
             except PromoCode.DoesNotExist:
                 raise forms.ValidationError("Promo code is invalid or inactive.")
         return None
+
