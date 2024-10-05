@@ -47,12 +47,7 @@ def checkout(request):
             messages.error(request, 'Client secret is required for payment processing.')
             return redirect(reverse('view_bag'))
 
-        form_data = {
-            'full_name': request.POST['full_name'],
-            'email': request.POST['email'],
-            'phone_number': request.POST['phone_number'],
-        }
-        order_form = OrderForm(form_data)
+        order_form = OrderForm(request.POST)  # Use request.POST directly
 
         if order_form.is_valid():
             order = order_form.save(commit=False)
@@ -65,9 +60,8 @@ def checkout(request):
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
 
-            # Initialize total and discount_amount
+            # Initialize total
             total = 0
-            discount_amount = 0
 
             # Calculate total from the bag
             for item_id, item_data in bag.items():
@@ -90,15 +84,18 @@ def checkout(request):
                     return redirect(reverse('view_bag'))
 
             # Promo code logic
-            promo_code_input = request.POST.get('promo_code', '').strip()
-
-            if promo_code_input:
+            promo_code = order_form.cleaned_data.get('promo_code')
+            if promo_code:
                 try:
-                    promo_code = PromoCode.objects.get(code=promo_code_input, active=True)
-                    discount_amount = (promo_code.discount_percentage / 100) * total  # Calculate discount amount
+                    promo = PromoCode.objects.get(code=promo_code, active=True)
+                    order.promo_code = promo  # Save promo code to the order
+                    discount_amount = (promo.discount_percentage / 100) * total
                     messages.success(request, f"Promo code applied! You saved ${discount_amount:.2f}.")
                 except PromoCode.DoesNotExist:
                     messages.error(request, "Invalid or expired promo code.")
+                    discount_amount = 0  # No discount if promo code is invalid
+            else:
+                discount_amount = 0  # No discount if no promo code
 
             # Apply discount to total
             total -= discount_amount 
@@ -144,7 +141,7 @@ def checkout(request):
                 amount=stripe_total,
                 currency=settings.STRIPE_CURRENCY,
             )
-            order_form = OrderForm()
+            order_form = OrderForm()  # Create a new order form for GET requests
         except Exception as e:
             logger.error(f"Stripe PaymentIntent creation error: {e}")
             messages.error(request, 'There was an issue with the payment processing.')
@@ -161,7 +158,6 @@ def checkout(request):
     }
 
     return render(request, template, context)
-
 
 def checkout_success(request, order_number):
     """

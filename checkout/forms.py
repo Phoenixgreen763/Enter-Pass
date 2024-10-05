@@ -34,8 +34,7 @@ class OrderForm(forms.ModelForm):
         if promo_code:
             try:
                 promo = PromoCode.objects.get(code=promo_code, active=True)
-                # Assuming you want to return some discount value
-                return promo.discount_value  # or any attribute that represents the discount
+                return promo  
             except PromoCode.DoesNotExist:
                 raise forms.ValidationError("Promo code is invalid or inactive.")
         return None
