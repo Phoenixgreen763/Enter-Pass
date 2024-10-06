@@ -3,6 +3,38 @@ from django.shortcuts import render, redirect, reverse, HttpResponse, get_object
 from django.contrib import messages
 from events.models import Event  
 
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import Coupon
+
+
+def create_coupon(request):
+    code = request.data.get('code')
+    discount_amount = request.data.get('discount_amount')
+    expiration_date = request.data.get('expiration_date')
+    usage_limit = request.data.get('usage_limit', 1)
+
+    coupon = Coupon.objects.create(
+        code=code,
+        discount_amount=discount_amount,
+        expiration_date=expiration_date,
+        usage_limit=usage_limit
+    )
+    
+    return Response({"id": coupon.id, "code": coupon.code}, status=status.HTTP_201_CREATED)
+
+def apply_coupon(request):
+    code = request.data.get('code')
+    coupon = get_object_or_404(Coupon, code=code)
+
+    if not coupon.is_valid():
+        return Response({'error': 'Coupon is invalid or expired.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    coupon.used_count += 1
+    coupon.save()
+
+    return Response({'discount_amount': coupon.discount_amount}, status=status.HTTP_200_OK)
 
 def view_bag(request):
     """ A view that renders the bag contents page """
@@ -23,14 +55,22 @@ def view_bag(request):
             })
         except Event.DoesNotExist:
             messages.error(request, f'Event with ID {item_id} does not exist.')
+            
+    discount_code = request.POST.get('discount_code', '')  
+    discount_amount = Decimal('0.00')
+    
+    if discount_code == "DISCOUNT10":
+            discount_amount = total * Decimal('0.10')  # 10% discount
+            messages.success(request, 'Discount of 10% applied!')
 
-    grand_total = total  # Set grand total to total
+    grand_total = total - discount_amount  # Set grand total to total
 
     context = {
         'bag_items': bag_items,
         'total': total,
         'grand_total': grand_total,
         'messages': messages.get_messages(request), 
+        'discount_code': discount_code,
     }
 
     return render(request, 'bag/bag.html', context)

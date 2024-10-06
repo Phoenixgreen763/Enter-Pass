@@ -85,6 +85,13 @@
                             {% endfor %}
                             <tr>
                                 <td colspan="5" class="pt-5 text-right">
+                                    <form method="POST" action="{% url 'view_bag' %}">
+                                        {% csrf_token %}
+                                        <input type="text" name="discount_code" placeholder="Enter discount code" required>
+                                        <button type="submit">Apply</button>
+                                    </form>
+                                </td>
+                                <td colspan="5" class="pt-5 text-right">
                                     <h4 class="mt-4"><strong>Total: ${{ total|floatformat:2 }}</strong></h4>
                                 </td>
                             </tr>
