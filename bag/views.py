@@ -118,14 +118,19 @@ def remove_from_bag(request, item_id):
         messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
     
-def calculate_grand_total(bag):
-    """Calculate the grand total for the shopping bag."""
-    total = Decimal('0.00')  # Initialize as Decimal
+def calculate_grand_total(bag, discount_amount=Decimal('0.00')):
+    total = Decimal('0.00')  # Initialize total as Decimal
+
     for item_id, quantity in bag.items():
         try:
-            event = Event.objects.get(pk=item_id)  # Fetch the event by ID
-            subtotal = event.price * quantity  # Calculate subtotal for this item
-            total += subtotal  # Total is now a Decimal
+            event = Event.objects.get(pk=item_id)
+            subtotal = event.price * quantity
+            total += subtotal
         except Event.DoesNotExist:
-            pass  # Optionally log this error or handle it in some way
-    return total
+            continue 
+
+    # Calculate the grand total after applying the discount
+    grand_total = total - discount_amount
+
+    # Ensure the grand total does not go below zero
+    return grand_total if grand_total > 0 else Decimal('0.00')
