@@ -28,23 +28,25 @@ def create_coupon(request):
 
 def apply_coupon(request):
     if request.method == 'POST':
-        code = request.POST.get('discount_code')  # Ensure you're getting the code from the POST data
+        code = request.POST.get('discount_code')  
         
-        # Attempt to get the coupon by code
-        coupon = get_object_or_404(Coupon, code=code)
+        try:
+            coupon = Coupon.objects.get(code=code)  
+        except Coupon.DoesNotExist:
+            messages.error(request, 'Coupon is invalid or expired.')
+            return redirect('view_bag')  
 
         # Validate coupon
-        if not coupon.is_valid():  # Ensure you have this method defined in your Coupon model
+        if not coupon.is_valid():  # Make sure you have this method defined in your Coupon model
             messages.error(request, 'Coupon is invalid or expired.')
-            return redirect('view_bag')  # Redirect back to the bag page
+            return redirect('view_bag')  
 
         # Update coupon usage count
         coupon.used_count += 1
         coupon.save()
 
-        # Store discount information in the session, converting Decimal to float
         request.session['discount_code'] = coupon.code
-        request.session['discount_amount'] = float(coupon.discount_amount)  # Convert to float
+        request.session['discount_amount'] = coupon.discount_amount
 
         messages.success(request, f'Coupon {coupon.code} applied! Discount: ${coupon.discount_amount}')
         return redirect('view_bag')  # Redirect back to the bag page
