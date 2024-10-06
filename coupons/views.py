@@ -8,29 +8,33 @@ from .models import Coupon
 
 
 def create_coupon(request):
-    code = request.data.get('code')
-    discount_amount = request.data.get('discount_amount')
-    expiration_date = request.data.get('expiration_date')
-    usage_limit = request.data.get('usage_limit', 1)
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        discount_amount = request.POST.get('discount_amount')
+        expiration_date = request.POST.get('expiration_date')
+        usage_limit = request.POST.get('usage_limit', 1)
 
-    coupon = Coupon.objects.create(
-        code=code,
-        discount_amount=discount_amount,
-        expiration_date=expiration_date,
-        usage_limit=usage_limit
-    )
-    
-    return Response({"id": coupon.id, "code": coupon.code}, status=status.HTTP_201_CREATED)
+        coupon = Coupon.objects.create(
+            code=code,
+            discount_amount=discount_amount,
+            expiration_date=expiration_date,
+            usage_limit=usage_limit
+        )
+        
+        messages.success(request, f'Coupon {coupon.code} created successfully!')
+        return redirect('view_bag')  # Redirect or render a template
+
+    return render(request, 'create_coupon.html')
 
 def apply_coupon(request):
     if request.method == 'POST':
-        code = request.POST.get('discount_code')  # Use POST data
+        code = request.POST.get('discount_code')  # Ensure you're getting the code from the POST data
         
         # Attempt to get the coupon by code
         coupon = get_object_or_404(Coupon, code=code)
 
         # Validate coupon
-        if not coupon.is_valid():
+        if not coupon.is_valid():  # Make sure you have this method defined in your Coupon model
             messages.error(request, 'Coupon is invalid or expired.')
             return redirect('view_bag')  # Redirect back to the bag page
 

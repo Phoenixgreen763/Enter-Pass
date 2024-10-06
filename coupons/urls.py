@@ -1,3 +1,4 @@
+# coupons/urls.py
 from django.urls import path
 from .views import create_coupon, apply_coupon
 
