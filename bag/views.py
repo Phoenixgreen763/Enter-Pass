@@ -61,7 +61,6 @@ def view_bag(request):
     
     if discount_code == "DISCOUNT10":
             discount_amount = total * Decimal('0.10')  # 10% discount
-            messages.success(request, 'Discount of 10% applied!')
 
     grand_total = total - discount_amount  # Set grand total to total
 
