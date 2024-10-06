@@ -119,11 +119,6 @@ def checkout(request):
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
-    
-    if 'discount_code' in request.session:
-        del request.session['discount_code']
-    if 'discount_amount' in request.session:
-        del request.session['discount_amount']
 
     return render(request, template, context)
 
@@ -142,5 +137,10 @@ def checkout_success(request, order_number):
     context = {
         'order': order,
     }
+    
+    if 'discount_code' in request.session:
+        del request.session['discount_code']
+    if 'discount_amount' in request.session:
+        del request.session['discount_amount']
 
     return render(request, template, context)
