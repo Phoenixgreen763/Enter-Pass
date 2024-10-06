@@ -67,6 +67,9 @@ def view_bag(request):
     # Retrieve discount code and amount from session
     discount_code = request.session.get('discount_code', '')  
     discount_amount = request.session.get('discount_amount', Decimal('0.00'))
+    
+    if discount_code == "DISCOUNT10":
+        discount_amount = total * Decimal('0.10')  # 10% discount
 
     grand_total = total - discount_amount  # Set grand total to total
 
@@ -79,7 +82,6 @@ def view_bag(request):
     }
 
     return render(request, 'bag/bag.html', context)
-
 
 def add_to_bag(request, item_id):
     """ Add a quantity of the specified event to the shopping bag """
