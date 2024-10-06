@@ -25,11 +25,11 @@ def calculate_grand_total(bag):
 def apply_coupon(request):
     """Apply coupon to the session-based bag using promotion code."""
     if request.method == "POST":
-        promo_code = request.POST.get('coupon_code')  
-        
+        promo_code = request.POST.get('coupon_code') 
+
         try:
             promotion = stripe.PromotionCode.retrieve(promo_code)
-            coupon_id = promotion.coupon.id  # Get the associated coupon ID
+            coupon_id = promotion.coupon.id  
 
             coupon = stripe.Coupon.retrieve(coupon_id)
 
@@ -39,7 +39,6 @@ def apply_coupon(request):
             elif coupon.amount_off:
                 discount = Decimal(coupon.amount_off) / 100
 
-            # Store the promotion code and discount in the session
             request.session['coupon_code'] = promo_code
             request.session['discount'] = discount
             messages.success(request, f'Promotion code "{promo_code}" applied successfully.')
@@ -48,7 +47,7 @@ def apply_coupon(request):
             messages.error(request, f'Invalid promotion code: {e.user_message}')
             logger.error(f'Promotion code: {promo_code}, Error: {str(e)}')
             
-    return redirect('view_bag')
+    return redirect('view_bag') 
             
 def view_bag(request):
     """A view that renders the bag contents page with coupon discount"""
