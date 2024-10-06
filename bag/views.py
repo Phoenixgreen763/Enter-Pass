@@ -18,7 +18,12 @@ def view_bag(request):
         try:
             event = Event.objects.get(pk=item_id)  # Fetch the event by ID
             subtotal = event.price * quantity  # Calculate subtotal for this item
-            total += subtotal  # Accumulate total
+            
+            if isinstance(subtotal, float):
+                subtotal = Decimal(subtotal)
+
+            total += subtotal  
+            
             bag_items.append({
                 'event': event,
                 'quantity': quantity,
@@ -31,6 +36,9 @@ def view_bag(request):
     # Retrieve discount code and amount from session
     discount_code = request.session.get('discount_code', '')  
     discount_amount = request.session.get('discount_amount', Decimal('0.00'))
+
+    if isinstance(discount_amount, float):
+        discount_amount = Decimal(discount_amount)
 
     grand_total = total - discount_amount  # Set grand total to total
 
