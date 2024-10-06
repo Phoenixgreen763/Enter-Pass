@@ -119,18 +119,24 @@ def remove_from_bag(request, item_id):
         return HttpResponse(status=500)
     
 def calculate_grand_total(bag, discount_amount=Decimal('0.00')):
-    total = Decimal('0.00')  # Initialize total as Decimal
+    """Calculate the grand total of the items in the bag."""
+    total = Decimal('0.00')  
 
     for item_id, quantity in bag.items():
         try:
             event = Event.objects.get(pk=item_id)
-            subtotal = event.price * quantity
+            subtotal = event.price * quantity  
             total += subtotal
         except Event.DoesNotExist:
-            continue 
+            continue  
 
-    # Calculate the grand total after applying the discount
+    if not isinstance(discount_amount, Decimal):
+        discount_amount = Decimal(discount_amount)
+
     grand_total = total - discount_amount
 
-    # Ensure the grand total does not go below zero
-    return grand_total if grand_total > 0 else Decimal('0.00')
+    # Ensure grand total does not go below zero
+    if grand_total < Decimal('0.00'):
+        grand_total = Decimal('0.00')
+
+    return grand_total
