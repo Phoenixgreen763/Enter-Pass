@@ -88,28 +88,6 @@
                                     <h4 class="mt-4"><strong>Total: ${{ total|floatformat:2 }}</strong></h4>
                                 </td>
                             </tr>
-
-                            <!-- Coupon Code Input -->
-                            <tr>
-                                <td colspan="5" class="text-right">
-                                    <form method="POST" action="{% url 'apply_coupon' %}">
-                                        {% csrf_token %}
-                                        <input type="text" name="coupon_code" placeholder="Enter coupon code" required>
-                                        <button type="submit">Apply</button>
-                                    </form>                                    
-                                </td>
-                            </tr>
-
-                            <!-- Display Discount if Coupon is Applied -->
-                            {% if coupon_code %}
-                            <tr>
-                                <td colspan="5" class="text-right">
-                                    <p class="my-0">Coupon "{{ coupon_code }}" applied: -${{ discount_amount|floatformat:2 }}</p>
-                                    <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
-                                </td>
-                            </tr>
-                            {% endif %}
-
                             <tr>
                                 <td colspan="5" class="text-right">
                                     <a href="{% url 'all_events' %}" class="btn btn-outline-black rounded-0 btn-lg">

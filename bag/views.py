@@ -1,67 +1,20 @@
-import stripe
 from decimal import Decimal
-from django.conf import settings
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
-from events.models import Event
-import logging
+from events.models import Event  
 
 
-logger = logging.getLogger(__name__)
-
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
-def calculate_grand_total(bag):
-    """Calculates the total price of items in the bag."""
-    total = Decimal('0.00')
-    for item_id, quantity in bag.items():
-        try:
-            event = Event.objects.get(pk=item_id)
-            total += event.price * quantity
-        except Event.DoesNotExist:
-            continue  
-    return total
-
-def apply_coupon(request):
-    """Apply coupon to the session-based bag using promotion code."""
-    if request.method == "POST":
-        promo_code = request.POST.get('coupon_code') 
-
-        try:
-            promotion = stripe.PromotionCode.retrieve(promo_code)
-            coupon_id = promotion.coupon.id  
-
-            coupon = stripe.Coupon.retrieve(coupon_id)
-
-            discount = 0
-            if coupon.percent_off:
-                discount = Decimal(coupon.percent_off) / 100
-            elif coupon.amount_off:
-                discount = Decimal(coupon.amount_off) / 100
-
-            request.session['coupon_code'] = promo_code
-            request.session['discount'] = discount
-            messages.success(request, f'Promotion code "{promo_code}" applied successfully.')
-
-        except stripe.error.InvalidRequestError as e:
-            messages.error(request, f'Invalid promotion code: {e.user_message}')
-            logger.error(f'Promotion code: {promo_code}, Error: {str(e)}')
-            
-    return redirect('view_bag') 
-            
 def view_bag(request):
-    """A view that renders the bag contents page with coupon discount"""
+    """ A view that renders the bag contents page """
     bag = request.session.get('bag', {})
     bag_items = []
-    total = Decimal('0.00') 
-
-    discount = request.session.get('discount', 0)
+    total = Decimal('0.00')  # Initialize total as Decimal
 
     for item_id, quantity in bag.items():
         try:
-            event = Event.objects.get(pk=item_id)  
-            subtotal = event.price * quantity  
-            total += subtotal 
+            event = Event.objects.get(pk=item_id)  # Fetch the event by ID
+            subtotal = event.price * quantity  # Calculate subtotal for this item
+            total += subtotal  # Accumulate total
             bag_items.append({
                 'event': event,
                 'quantity': quantity,
@@ -71,36 +24,33 @@ def view_bag(request):
         except Event.DoesNotExist:
             messages.error(request, f'Event with ID {item_id} does not exist.')
 
-    # Calculate discount amount and apply to the grand total
-    discount_amount = total * discount if discount else Decimal('0.00')
-    grand_total = total - discount_amount
+    grand_total = total  # Set grand total to total
 
     context = {
         'bag_items': bag_items,
         'total': total,
-        'discount_amount': discount_amount,
         'grand_total': grand_total,
-        'coupon_code': request.session.get('coupon_code', None),
         'messages': messages.get_messages(request), 
     }
 
     return render(request, 'bag/bag.html', context)
 
 def add_to_bag(request, item_id):
-    """Add a quantity of the specified event to the shopping bag"""
+    """ Add a quantity of the specified event to the shopping bag """
     if request.method == "POST":
         event = get_object_or_404(Event, pk=item_id)
 
+        # Ensure quantity and redirect_url are set in the POST data
         quantity = int(request.POST.get('quantity', 1))  # Default to 1 if not specified
-        redirect_url = request.POST.get('redirect_url', reverse('view_bag')) 
+        redirect_url = request.POST.get('redirect_url', reverse('view_bag'))  # Default redirect
 
         # Initialize bag
         bag = request.session.get('bag', {})
-
+        
         print(f'Adding item ID {item_id} to the bag. Quantity: {quantity}. Current bag: {bag}')
 
         # Check if the item already exists in the bag
-        if str(item_id) in bag.keys():  
+        if str(item_id) in bag.keys():  # Make sure to convert item_id to string  
             bag[str(item_id)] += quantity
             messages.success(request, f'Updated {event.title} quantity to {bag[str(item_id)]}')
         else:
@@ -115,7 +65,7 @@ def add_to_bag(request, item_id):
         return redirect(reverse('view_bag'))
 
 def adjust_bag(request, item_id):
-    """Adjust the quantity of the specified event"""
+    """ Adjust the quantity of the specified event """
     if request.method == "POST":
         event = get_object_or_404(Event, pk=item_id)
         quantity = int(request.POST.get('quantity', 0))  # Default to 0 if not specified
@@ -127,7 +77,7 @@ def adjust_bag(request, item_id):
             bag[str(item_id)] = quantity
             messages.success(request, f'Updated {event.title} quantity to {bag[str(item_id)]}')
         else:
-            bag.pop(str(item_id), None)  
+            bag.pop(str(item_id), None)  # Use None to avoid KeyError if not in bag
             messages.success(request, f'Removed {event.title} from your bag')
 
         request.session['bag'] = bag
@@ -137,12 +87,12 @@ def adjust_bag(request, item_id):
         return redirect(reverse('view_bag'))
 
 def remove_from_bag(request, item_id):
-    """Remove the item from the shopping bag"""
+    """ Remove the item from the shopping bag """
     try:
         event = get_object_or_404(Event, pk=item_id)
         bag = request.session.get('bag', {})
 
-        bag.pop(str(item_id), None)  
+        bag.pop(str(item_id), None)  # Safely remove item
         messages.success(request, f'Removed {event.title} from your bag')
 
         request.session['bag'] = bag
@@ -150,3 +100,15 @@ def remove_from_bag(request, item_id):
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
+    
+def calculate_grand_total(bag):
+    """Calculate the grand total for the shopping bag."""
+    total = Decimal('0.00')  # Initialize as Decimal
+    for item_id, quantity in bag.items():
+        try:
+            event = Event.objects.get(pk=item_id)  # Fetch the event by ID
+            subtotal = event.price * quantity  # Calculate subtotal for this item
+            total += subtotal  # Total is now a Decimal
+        except Event.DoesNotExist:
+            pass  # Optionally log this error or handle it in some way
+    return total
