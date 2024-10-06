@@ -40,7 +40,7 @@
                                 <tr>
                                     <td class="p-3 w-25">
                                     {% if item.event.category.image %}
-                                        <img src="{{ item.event.category.image.url }}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
+                                        <img src="{{ item.event.category.image.url }}" class="card-img-top" alt="{{ item.event.category.name }}" style="height: 100px; object-fit: cover;">
                                     {% else %}
                                         <img src="{% static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
                                     {% endif %}
@@ -85,9 +85,31 @@
                             {% endfor %}
                             <tr>
                                 <td colspan="5" class="pt-5 text-right">
-                                    <h4 class="mt-4"><strong>Total: ${{ grand_total|floatformat:2 }}</strong></h4>
+                                    <h4 class="mt-4"><strong>Total: ${{ total|floatformat:2 }}</strong></h4>
                                 </td>
                             </tr>
+
+                            <!-- Coupon Code Input -->
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <form method="POST" action="{% url 'apply_coupon' %}">
+                                        {% csrf_token %}
+                                        <input type="text" name="coupon_code" placeholder="Enter coupon code" required>
+                                        <button type="submit">Apply</button>
+                                    </form>                                    
+                                </td>
+                            </tr>
+
+                            <!-- Display Discount if Coupon is Applied -->
+                            {% if coupon_code %}
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <p class="my-0">Coupon "{{ coupon_code }}" applied: -${{ discount_amount|floatformat:2 }}</p>
+                                    <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
+                                </td>
+                            </tr>
+                            {% endif %}
+
                             <tr>
                                 <td colspan="5" class="text-right">
                                     <a href="{% url 'all_events' %}" class="btn btn-outline-black rounded-0 btn-lg">
