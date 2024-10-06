@@ -146,10 +146,5 @@ def checkout_success(request, order_number):
         'order': order,
         'grand_total': grand_total,
     }
-    
-    if 'discount_code' in request.session:
-        del request.session['discount_code']
-    if 'discount_amount' in request.session:
-        del request.session['discount_amount']
 
     return render(request, template, context)
