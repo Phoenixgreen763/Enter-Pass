@@ -9,7 +9,7 @@ import logging
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from events.models import Event
-from profiles.models import UserProfile  # Import UserProfile to link orders
+from profiles.models import UserProfile  
 from bag.contexts import bag_contents
 
 # Set up logging
@@ -42,7 +42,6 @@ def checkout(request):
     if request.method == 'POST':
         bag = request.session.get('bag', {})
         client_secret = request.POST.get('client_secret')
-        stripe_coupon_code = request.POST.get('stripe_coupon_code')  # Get the coupon code from the form
 
         if not client_secret:
             messages.error(request, 'Client secret is required for payment processing.')
@@ -62,59 +61,33 @@ def checkout(request):
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
             order.user_profile = user_profile  # Associate the order with the user profile
 
-            pid = client_secret.split('_secret')[0]
+            pid = client_secret.split('_secret')[0] 
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
-
-            current_bag = bag_contents(request)
-            total = current_bag['grand_total']
-            stripe_total = round(total * 100)
-
-            discount_amount = 0
-            if stripe_coupon_code:
+            order.save()
+            
+            for item_id, item_data in bag.items():
                 try:
-                    stripe_coupon = stripe.Coupon.retrieve(stripe_coupon_code)
-                    if stripe_coupon.active:
-                        discount_amount = (stripe_total * stripe_coupon.percent_off) / 100
-                        messages.success(request, f'Coupon applied: {stripe_coupon_code}. Discount: ${discount_amount / 100:.2f}')
-                    else:
-                        messages.error(request, "This coupon is inactive.")
-                except stripe.error.InvalidRequestError:
-                    messages.error(request, "Invalid coupon code.")
-
-            stripe_total -= round(discount_amount)  
-            try:
-                stripe.PaymentIntent.modify(pid, amount=stripe_total)
-
-                order.save()  # Save the order
-
-                for item_id, item_data in bag.items():
-                    try:
-                        event = Event.objects.get(id=item_id)
-                        if isinstance(item_data, int):
-                            order_line_item = OrderLineItem(
-                                order=order,
-                                event=event,
-                                quantity=item_data,
-                            )
-                            order_line_item.save()
-                    except Event.DoesNotExist:
-                        messages.error(request, (
-                            "One of the Events in your bag wasn't found in our database. "
-                            "Please call us for assistance!")
+                    event = Event.objects.get(id=item_id)
+                    if isinstance(item_data, int):
+                        order_line_item = OrderLineItem(
+                            order=order,
+                            event=event,
+                            quantity=item_data,
                         )
-                        order.delete()
-                        return redirect(reverse('view_bag'))
-
-                request.session['save_info'] = 'save-info' in request.POST
-                return redirect(reverse('checkout_success', args=[order.order_number]))
-            except Exception as e:
-                logger.error(f"Stripe PaymentIntent update error: {e}")
-                messages.error(request, 'There was an issue with updating the payment. Please try again.')
-                return redirect(reverse('view_bag'))
+                        order_line_item.save()
+                except Event.DoesNotExist:
+                    messages.error(request, (
+                        "One of the Events in your bag wasn't found in our database. "
+                        "Please call us for assistance!")
+                    )
+                    order.delete()
+                    return redirect(reverse('view_bag'))
+                
+            request.session['save_info'] = 'save-info' in request.POST
+            return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
             messages.error(request, 'There was an error with your form. Please double-check your information.')
-
     else:
         bag = request.session.get('bag', {})
         if not bag:
@@ -149,7 +122,6 @@ def checkout(request):
 
     return render(request, template, context)
 
-
 def checkout_success(request, order_number):
     """
     Handle successful checkouts
@@ -166,4 +138,4 @@ def checkout_success(request, order_number):
         'order': order,
     }
 
-    return render(request, template, context) 
+    return render(request, template, context)
