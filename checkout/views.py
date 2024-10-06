@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpR
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
+from decimal import Decimal
 import stripe
 import json
 import logging
@@ -11,6 +12,7 @@ from .models import Order, OrderLineItem
 from events.models import Event
 from profiles.models import UserProfile  
 from bag.contexts import bag_contents
+from .views import calculate_grand_total
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -124,7 +126,7 @@ def checkout(request):
 
 def checkout_success(request, order_number):
     """
-    Handle successful checkouts
+    View for order confirmation.
     """
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
@@ -132,10 +134,17 @@ def checkout_success(request, order_number):
 
     if 'bag' in request.session:
         del request.session['bag']
+        
+    bag = request.session.get('bag', {})
+        
+    discount_amount = request.session.get('discount_amount', Decimal('0.00'))
+        
+    grand_total = calculate_grand_total(bag, discount_amount)
 
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
+        'grand_total': grand_total,
     }
     
     if 'discount_code' in request.session:
