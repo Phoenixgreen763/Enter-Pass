@@ -106,11 +106,11 @@
                                     </tr>
                                 {% endif %}
                                 <td colspan="5" class="pt-5 text-right">
-                                    <form method="POST" action="{% url 'view_bag' %}">
+                                    <form method="POST" action="{% url 'apply_coupon' %}">
                                         {% csrf_token %}
                                         <input type="text" name="discount_code" placeholder="Enter discount code" required>
                                         <button type="submit">Apply</button>
-                                    </form>
+                                    </form>                                                                       
                                 </td>
                             </tr>
                             <tr>

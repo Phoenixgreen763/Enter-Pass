@@ -25,26 +25,35 @@ def create_coupon(request):
     return Response({"id": coupon.id, "code": coupon.code}, status=status.HTTP_201_CREATED)
 
 def apply_coupon(request):
-    code = request.data.get('code')
-    
-    # Attempt to get the coupon by code
-    coupon = get_object_or_404(Coupon, code=code)
+    if request.method == 'POST':
+        code = request.POST.get('discount_code')  # Use POST data
+        
+        # Attempt to get the coupon by code
+        coupon = get_object_or_404(Coupon, code=code)
 
-    # Validate coupon
-    if not coupon.is_valid():
-        return Response({'error': 'Coupon is invalid or expired.'}, status=status.HTTP_400_BAD_REQUEST)
+        # Validate coupon
+        if not coupon.is_valid():
+            messages.error(request, 'Coupon is invalid or expired.')
+            return redirect('view_bag')  # Redirect back to the bag page
 
-    # Update coupon usage count
-    coupon.used_count += 1
-    coupon.save()
+        # Update coupon usage count
+        coupon.used_count += 1
+        coupon.save()
 
-    # Store discount information in the session
-    request.session['discount_code'] = coupon.code
-    request.session['discount_amount'] = coupon.discount_amount
+        # Store discount information in the session
+        request.session['discount_code'] = coupon.code
+        request.session['discount_amount'] = coupon.discount_amount
 
-    return Response({'discount_amount': coupon.discount_amount}, status=status.HTTP_200_OK)
+        messages.success(request, f'Coupon {coupon.code} applied! Discount: ${coupon.discount_amount}')
+        return redirect('view_bag')  # Redirect back to the bag page
+
+    # If not a POST request, redirect back
+    return redirect('view_bag')
 
 def view_bag(request):
+    if request.method == 'POST':
+        return apply_coupon(request) 
+    
     """ A view that renders the bag contents page """
     bag = request.session.get('bag', {})
     bag_items = []
