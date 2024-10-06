@@ -48,6 +48,8 @@ def apply_coupon(request):
             messages.error(request, f'Invalid promotion code: {e.user_message}')
             logger.error(f'Promotion code: {promo_code}, Error: {str(e)}')
             
+    return redirect('view_bag')
+            
 def view_bag(request):
     """A view that renders the bag contents page with coupon discount"""
     bag = request.session.get('bag', {})
