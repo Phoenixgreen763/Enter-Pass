@@ -12,7 +12,7 @@ from .models import Order, OrderLineItem
 from events.models import Event
 from profiles.models import UserProfile  
 from bag.contexts import bag_contents
-from .views import calculate_grand_total
+from bag.views import calculate_grand_total
 
 # Set up logging
 logger = logging.getLogger(__name__)
