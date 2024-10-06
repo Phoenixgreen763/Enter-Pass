@@ -51,3 +51,16 @@ def apply_coupon(request):
 
     # If not a POST request, redirect back
     return redirect('view_bag')
+
+def remove_coupon(request):
+    if request.method == 'POST':
+        # Clear the discount code and amount from the session
+        if 'discount_code' in request.session:
+            del request.session['discount_code']
+        if 'discount_amount' in request.session:
+            del request.session['discount_amount']
+        
+        messages.success(request, 'Discount code removed.')
+    
+    # Redirect back to the bag page
+    return redirect('view_bag')

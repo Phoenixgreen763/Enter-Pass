@@ -90,11 +90,6 @@
                                 {% if discount_code %}
                                     <tr>
                                         <td colspan="5" class="pt-5 text-right">
-                                            <h4 class="mt-4"><strong>Discount ({{ discount_code }}): -${{ discount_amount|floatformat:2 }}</strong></h4>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5" class="pt-5 text-right">
                                             <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
                                         </td>
                                     </tr>
@@ -106,11 +101,16 @@
                                     </tr>
                                 {% endif %}
                                 <td colspan="5" class="pt-5 text-right">
-                                    <form method="POST" action="{% url 'apply_coupon' %}">
+                                    <form method="POST" action="{% url 'apply_coupon' %}" style="display: inline;">
                                         {% csrf_token %}
                                         <input type="text" name="discount_code" placeholder="Enter discount code" required>
                                         <button type="submit">Apply</button>
-                                    </form>                                                                       
+                                    </form>
+                                    
+                                    <form method="POST" action="{% url 'remove_coupon' %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit">Remove Discount</button>
+                                    </form>
                                 </td>
                             </tr>
                             <tr>
