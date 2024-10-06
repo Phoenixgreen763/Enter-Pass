@@ -87,6 +87,24 @@
                                 <td colspan="5" class="pt-5 text-right">
                                     <h4 class="mt-4"><strong>Total: ${{ total|floatformat:2 }}</strong></h4>
                                 </td>
+                                {% if discount_code %}
+                                    <tr>
+                                        <td colspan="5" class="pt-5 text-right">
+                                            <h4 class="mt-4"><strong>Discount ({{ discount_code }}): -${{ discount_amount|floatformat:2 }}</strong></h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="pt-5 text-right">
+                                            <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="5" class="pt-5 text-right">
+                                            <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
+                                        </td>
+                                    </tr>
+                                {% endif %}
                                 <td colspan="5" class="pt-5 text-right">
                                     <form method="POST" action="{% url 'view_bag' %}">
                                         {% csrf_token %}

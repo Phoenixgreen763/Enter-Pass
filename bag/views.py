@@ -26,13 +26,21 @@ def create_coupon(request):
 
 def apply_coupon(request):
     code = request.data.get('code')
+    
+    # Attempt to get the coupon by code
     coupon = get_object_or_404(Coupon, code=code)
 
+    # Validate coupon
     if not coupon.is_valid():
         return Response({'error': 'Coupon is invalid or expired.'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # Update coupon usage count
     coupon.used_count += 1
     coupon.save()
+
+    # Store discount information in the session
+    request.session['discount_code'] = coupon.code
+    request.session['discount_amount'] = coupon.discount_amount
 
     return Response({'discount_amount': coupon.discount_amount}, status=status.HTTP_200_OK)
 
@@ -55,12 +63,10 @@ def view_bag(request):
             })
         except Event.DoesNotExist:
             messages.error(request, f'Event with ID {item_id} does not exist.')
-            
-    discount_code = request.POST.get('discount_code', '')  
-    discount_amount = Decimal('0.00')
-    
-    if discount_code == "DISCOUNT10":
-            discount_amount = total * Decimal('0.10')  # 10% discount
+
+    # Retrieve discount code and amount from session
+    discount_code = request.session.get('discount_code', '')  
+    discount_amount = request.session.get('discount_amount', Decimal('0.00'))
 
     grand_total = total - discount_amount  # Set grand total to total
 
@@ -73,6 +79,7 @@ def view_bag(request):
     }
 
     return render(request, 'bag/bag.html', context)
+
 
 def add_to_bag(request, item_id):
     """ Add a quantity of the specified event to the shopping bag """
