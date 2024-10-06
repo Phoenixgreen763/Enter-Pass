@@ -4,7 +4,10 @@ from django.conf import settings
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
 from events.models import Event
+import logging
 
+
+logger = logging.getLogger(__name__)
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -20,29 +23,31 @@ def calculate_grand_total(bag):
     return total
 
 def apply_coupon(request):
-    """Apply coupon to the session-based bag"""
+    """Apply coupon to the session-based bag using promotion code."""
     if request.method == "POST":
-        coupon_code = request.POST.get('coupon_code')
-
+        promo_code = request.POST.get('coupon_code')  
+        
         try:
-            coupon = stripe.Coupon.retrieve(coupon_code)
-            discount = 0
+            promotion = stripe.PromotionCode.retrieve(promo_code)
+            coupon_id = promotion.coupon.id  # Get the associated coupon ID
 
+            coupon = stripe.Coupon.retrieve(coupon_id)
+
+            discount = 0
             if coupon.percent_off:
                 discount = Decimal(coupon.percent_off) / 100
             elif coupon.amount_off:
-                discount = Decimal(coupon.amount_off) / 100 
+                discount = Decimal(coupon.amount_off) / 100
 
-            # Store the coupon and discount in the session
-            request.session['coupon_code'] = coupon_code
+            # Store the promotion code and discount in the session
+            request.session['coupon_code'] = promo_code
             request.session['discount'] = discount
-            messages.success(request, f'Coupon "{coupon_code}" applied successfully.')
+            messages.success(request, f'Promotion code "{promo_code}" applied successfully.')
 
-        except stripe.error.InvalidRequestError:
-            messages.error(request, 'Invalid coupon code.')
-
-    return redirect('view_bag')
-
+        except stripe.error.InvalidRequestError as e:
+            messages.error(request, f'Invalid promotion code: {e.user_message}')
+            logger.error(f'Promotion code: {promo_code}, Error: {str(e)}')
+            
 def view_bag(request):
     """A view that renders the bag contents page with coupon discount"""
     bag = request.session.get('bag', {})
