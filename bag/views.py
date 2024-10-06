@@ -4,10 +4,6 @@ from django.contrib import messages
 from events.models import Event  
 from coupons.views import apply_coupon
 
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-
 
 def view_bag(request):
     if request.method == 'POST':
