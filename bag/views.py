@@ -40,7 +40,9 @@ def view_bag(request):
     if isinstance(discount_percentage, float):
         discount_percentage = Decimal(discount_percentage)
 
-    grand_total = total - discount_percentage  # Set grand total to total
+    # Calculate the discount amount
+    discount_amount = (discount_percentage / Decimal('100')) * total  # Convert percentage to decimal
+    grand_total = total - discount_amount 
 
     context = {
         'bag_items': bag_items,
