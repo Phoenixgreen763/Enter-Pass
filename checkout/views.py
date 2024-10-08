@@ -141,6 +141,7 @@ def checkout(request):
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+        'bag_items': current_bag['bag_items'],
     }
 
     return render(request, template, context)
