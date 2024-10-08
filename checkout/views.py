@@ -133,11 +133,19 @@ def checkout_success(request, order_number):
     """
     View for order confirmation.
     """
+    save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
     messages.success(request, f'Order successfully processed! Your order number is {order_number}. A confirmation email will be sent to {order.email}.')
 
     if 'bag' in request.session:
         del request.session['bag']
+        
+    bag = request.session.get('bag', {})
+        
+    discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
+    
+    grand_total = calculate_grand_total(bag, discount_percentage)
+    order.grand_total = grand_total
     
     template = 'checkout/checkout_success.html'
     context = {
