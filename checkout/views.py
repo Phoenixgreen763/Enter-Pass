@@ -135,7 +135,9 @@ def checkout_success(request, order_number):
     bag = request.session.get('bag', {})
     discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
 
-    order.update_total()  
+    grand_total = calculate_grand_total(bag, discount_percentage)
+
+    order.grand_total = grand_total  # Ensure the order's grand total is set correctly
 
     messages.success(request, f'Order successfully processed! Your order number is {order_number}. A confirmation email will be sent to {order.email}.')
 
