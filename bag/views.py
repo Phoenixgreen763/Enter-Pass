@@ -132,6 +132,10 @@ def calculate_grand_total(bag, discount_percentage=Decimal('0.00')):
         except Event.DoesNotExist:
             continue  
 
+    # Ensure discount_percentage is treated as a Decimal
+    if isinstance(discount_percentage, float):
+        discount_percentage = Decimal(discount_percentage)
+
     # Calculate the discount amount based on the percentage
     if discount_percentage > Decimal('0.00'):
         discount_amount = (discount_percentage / Decimal('100')) * total
