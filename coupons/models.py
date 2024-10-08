@@ -3,7 +3,7 @@ from django.utils import timezone
 
 class Coupon(models.Model):
     code = models.CharField(max_length=20, unique=True)
-    discount_percentage = models.PositiveIntegerField(max_digits=10, decimal_places=2)
+    discount_percentage = models.PositiveIntegerField(default=0)
     expiration_date = models.DateTimeField()
     usage_limit = models.PositiveIntegerField(default=1)
     used_count = models.PositiveIntegerField(default=0)
