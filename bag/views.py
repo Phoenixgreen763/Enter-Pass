@@ -120,8 +120,8 @@ def remove_from_bag(request, item_id):
         messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
     
-def calculate_grand_total(bag, discount_amount=Decimal('0.00')):
-    """Calculate the grand total of the items in the bag."""
+def calculate_grand_total(bag, discount_percentage=Decimal('0.00')):
+    """Calculate the grand total of the items in the bag, applying a percentage discount."""
     total = Decimal('0.00')  
 
     for item_id, quantity in bag.items():
@@ -132,10 +132,12 @@ def calculate_grand_total(bag, discount_amount=Decimal('0.00')):
         except Event.DoesNotExist:
             continue  
 
-    if not isinstance(discount_amount, Decimal):
-        discount_amount = Decimal(discount_amount)
-
-    grand_total = total - discount_amount
+    # Calculate the discount amount based on the percentage
+    if discount_percentage > Decimal('0.00'):
+        discount_amount = (discount_percentage / Decimal('100')) * total
+        grand_total = total - discount_amount
+    else:
+        grand_total = total 
 
     # Ensure grand total does not go below zero
     if grand_total < Decimal('0.00'):
