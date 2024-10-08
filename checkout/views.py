@@ -63,6 +63,19 @@ def checkout(request):
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
             order.user_profile = user_profile  # Associate the order with the user profile
 
+            # Ensure discount_percentage is a Decimal
+            discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
+
+            # Calculate grand total with discounts applied
+            grand_total = calculate_grand_total(bag, discount_percentage)
+
+            if isinstance(discount_percentage, float):
+                discount_percentage = Decimal(discount_percentage)
+
+            order.discount_percentage = discount_percentage
+            order.discount_amount = (order.discount_percentage / Decimal('100')) * order.order_total  # Apply discount
+            order.grand_total = grand_total  # Set grand total after applying discount
+
             # Calculate grand total with discounts applied
             grand_total = calculate_grand_total(bag, request.session.get('discount_percentage', Decimal('0.00')))
             
