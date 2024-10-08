@@ -63,11 +63,15 @@ def checkout(request):
             user_profile, created = UserProfile.objects.get_or_create(user=request.user)
             order.user_profile = user_profile  # Associate the order with the user profile
 
-            pid = client_secret.split('_secret')[0] 
+            # Calculate grand total with discounts applied
+            grand_total = calculate_grand_total(bag, request.session.get('discount_percentage', Decimal('0.00')))
+            order.grand_total = grand_total  
+
+            pid = client_secret.split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
             order.save()
-            
+
             for item_id, item_data in bag.items():
                 try:
                     event = Event.objects.get(id=item_id)
@@ -85,7 +89,7 @@ def checkout(request):
                     )
                     order.delete()
                     return redirect(reverse('view_bag'))
-                
+
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse('checkout_success', args=[order.order_number]))
         else:
@@ -96,10 +100,10 @@ def checkout(request):
             messages.error(request, "There's nothing in your bag at the moment")
             return redirect(reverse('products'))
 
-        current_bag = bag_contents(request) 
-        grand_total = current_bag['grand_total']
+        current_bag = bag_contents(request)
+        grand_total = current_bag['grand_total']  # Get grand total from the bag contents
 
-        stripe_total = round(grand_total * 100)
+        stripe_total = round(grand_total * 100)  
         stripe.api_key = stripe_secret_key
 
         try:
@@ -140,12 +144,10 @@ def checkout_success(request, order_number):
         
     discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
         
-    grand_total = calculate_grand_total(bag, discount_percentage)
-
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
-        'grand_total': grand_total,
+        'grand_total': order.grand_total, 
     }
 
     if 'discount_code' in request.session:
