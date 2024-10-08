@@ -65,6 +65,9 @@ def checkout(request):
 
             # Calculate grand total with discounts applied
             grand_total = calculate_grand_total(bag, request.session.get('discount_percentage', Decimal('0.00')))
+            
+            order.discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
+            order.discount_amount = (order.discount_percentage / Decimal('100'))
             order.grand_total = grand_total  
 
             pid = client_secret.split('_secret')[0]
