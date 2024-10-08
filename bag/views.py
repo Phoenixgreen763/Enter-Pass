@@ -35,12 +35,12 @@ def view_bag(request):
 
     # Retrieve discount code and amount from session
     discount_code = request.session.get('discount_code', '')  
-    discount_amount = request.session.get('discount_amount', Decimal('0.00'))
+    discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
 
-    if isinstance(discount_amount, float):
-        discount_amount = Decimal(discount_amount)
+    if isinstance(discount_percentage, float):
+        discount_percentage = Decimal(discount_percentage)
 
-    grand_total = total - discount_amount  # Set grand total to total
+    grand_total = total - discount_percentage  # Set grand total to total
 
     context = {
         'bag_items': bag_items,

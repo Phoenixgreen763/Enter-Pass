@@ -20,18 +20,18 @@ def bag_contents(request):
             })
 
     # Retrieve the discount amount from the session (if applied)
-    discount_amount = request.session.get('discount_amount', Decimal('0.00'))
+    discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
 
-    if isinstance(discount_amount, float):
-        discount_amount = Decimal(discount_amount)
+    if isinstance(discount_percentage, float):
+        discount_percentage = Decimal(discount_percentage)
 
-    grand_total = total - discount_amount
+    grand_total = total - discount_percentage
 
     context = {
         'bag_items': bag_items,
         'total': total,
         'event_count': event_count,
-        'discount_amount': discount_amount, 
+        'discount_percentage': discount_percentage, 
         'grand_total': grand_total,  
     }
 

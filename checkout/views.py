@@ -137,9 +137,9 @@ def checkout_success(request, order_number):
         
     bag = request.session.get('bag', {})
         
-    discount_amount = request.session.get('discount_amount', Decimal('0.00'))
+    discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
         
-    grand_total = calculate_grand_total(bag, discount_amount)
+    grand_total = calculate_grand_total(bag, discount_percentage)
 
     template = 'checkout/checkout_success.html'
     context = {
@@ -149,7 +149,7 @@ def checkout_success(request, order_number):
 
     if 'discount_code' in request.session:
         del request.session['discount_code']
-    if 'discount_amount' in request.session:
-        del request.session['discount_amount']
+    if 'discount_percentage' in request.session:
+        del request.session['discount_percentage']
             
     return render(request, template, context)

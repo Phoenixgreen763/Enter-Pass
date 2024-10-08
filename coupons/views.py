@@ -10,13 +10,13 @@ from .models import Coupon
 def create_coupon(request):
     if request.method == 'POST':
         code = request.POST.get('code')
-        discount_amount = request.POST.get('discount_amount')
+        discount_percentage = request.POST.get('discount_percentage')
         expiration_date = request.POST.get('expiration_date')
         usage_limit = request.POST.get('usage_limit', 1)
 
         coupon = Coupon.objects.create(
             code=code,
-            discount_amount=discount_amount,
+            discount_percentage=discount_percentage,
             expiration_date=expiration_date,
             usage_limit=usage_limit
         )
@@ -47,9 +47,9 @@ def apply_coupon(request):
 
         # Store discount information in the session
         request.session['discount_code'] = coupon.code
-        request.session['discount_amount'] = float(coupon.discount_amount)  # Convert Decimal to float
+        request.session['discount_percentage'] = float(coupon.discount_percentage)  # Convert Decimal to float
 
-        messages.success(request, f'Coupon {coupon.code} applied! Discount: ${coupon.discount_amount}')
+        messages.success(request, f'Coupon {coupon.code} applied! Discount: ${coupon.discount_percentage}')
         return redirect('view_bag')  
 
     # If not a POST request, redirect back
@@ -61,8 +61,8 @@ def remove_coupon(request):
         # Clear the discount code and amount from the session
         if 'discount_code' in request.session:
             del request.session['discount_code']
-        if 'discount_amount' in request.session:
-            del request.session['discount_amount']
+        if 'discount_percentage' in request.session:
+            del request.session['discount_percentage']
         
         messages.success(request, 'Discount code removed.')
     
