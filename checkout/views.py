@@ -101,9 +101,9 @@ def checkout(request):
             return redirect(reverse('products'))
 
         current_bag = bag_contents(request)
-        grand_total = current_bag['grand_total']  # Get grand total from the bag contents
+        grand_total = calculate_grand_total(bag, request.session.get('discount_percentage', Decimal('0.00')))
+        stripe_total = round(grand_total * 100)
 
-        stripe_total = round(grand_total * 100)  
         stripe.api_key = stripe_secret_key
 
         try:
@@ -133,29 +133,21 @@ def checkout_success(request, order_number):
     """
     View for order confirmation.
     """
-    save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
     messages.success(request, f'Order successfully processed! Your order number is {order_number}. A confirmation email will be sent to {order.email}.')
 
     if 'bag' in request.session:
         del request.session['bag']
-        
-    bag = request.session.get('bag', {})
-        
-    discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
-       
-    grand_total = calculate_grand_total(bag, request.session.get('discount_percentage', Decimal('0.00')))
-    order.grand_total = grand_total 
     
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
-        'grand_total': order.grand_total, 
+        'grand_total': order.grand_total,  
     }
 
     if 'discount_code' in request.session:
         del request.session['discount_code']
     if 'discount_percentage' in request.session:
         del request.session['discount_percentage']
-            
+        
     return render(request, template, context)
