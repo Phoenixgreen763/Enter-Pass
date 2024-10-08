@@ -49,7 +49,7 @@ def apply_coupon(request):
         request.session['discount_code'] = coupon.code
         request.session['discount_percentage'] = float(coupon.discount_percentage)  # Convert Decimal to float
 
-        messages.success(request, f'Coupon {coupon.code} applied! Discount: ${coupon.discount_percentage}')
+        messages.success(request, f'Coupon {coupon.code} applied! Discount:{coupon.discount_percentage}%')
         return redirect('view_bag')  
 
     # If not a POST request, redirect back
