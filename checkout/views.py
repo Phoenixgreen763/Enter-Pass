@@ -143,7 +143,10 @@ def checkout_success(request, order_number):
     bag = request.session.get('bag', {})
         
     discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
-        
+       
+    grand_total = calculate_grand_total(bag, request.session.get('discount_percentage', Decimal('0.00')))
+    order.grand_total = grand_total 
+    
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
