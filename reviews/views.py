@@ -42,7 +42,8 @@ def delete_review(request, review_id):
 
     if request.method == 'POST':
         review.delete()
-        messages.success(request, 'Review has been deleted successfully!')
-        return redirect('review_list')  # Adjust this URL to wherever you list reviews
+        # Redirect to the review list page after deletion
+        return redirect('review_list') 
 
-    return render(request, 'reviews/delete_review.html', {'review': review})
+    review.delete()
+    return redirect('review_list')
