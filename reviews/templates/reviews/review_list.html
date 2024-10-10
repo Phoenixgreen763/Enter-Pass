@@ -51,6 +51,7 @@
                                 <td>
                                     <!-- Delete button for admins -->
                                     <a href="{% url 'delete_review' review.id %}" class="btn btn-danger btn-sm">
+                                        {% csrf_token %}
                                         Delete
                                     </a>
                                 </td>
