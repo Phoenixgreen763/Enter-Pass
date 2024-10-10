@@ -44,7 +44,7 @@
                             <tr>
                                 <td>{{ review.user.username }}</td>
                                 <td>{{ review.review_text }}</td>
-                                <td>{{ review.rating }}</td>
+                                <td>{{ review.rating }} <i class="fas fa-star fa-lg"></i></td>
                                 <td>{{ review.created_at }}</td>
 
                                 {% if user.is_superuser %}
