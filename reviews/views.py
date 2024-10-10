@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Review
 from .forms import ReviewForm
+from django.contrib import messages
+
 
 def review_list(request):
     reviews = Review.objects.all().order_by('-created_at')
@@ -19,3 +21,15 @@ def review_list(request):
         'form': form,
     }
     return render(request, 'reviews/review_list.html', context)
+
+def add_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the review to the database
+            messages.success(request, 'Your review has been added successfully!')
+            return redirect('review_list')  # Redirect to a page listing all reviews or wherever appropriate
+    else:
+        form = ReviewForm()
+
+    return render(request, 'reviews/add_review.html', {'form': form})
