@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container mb-2">
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2 class="logo-font mb-4">User Reviews</h2>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h4>Add a Review:</h4>
+                <form method="POST" class="mb-5">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_review_text">Your Review:</label>
+                        {{ form.review_text|as_crispy_field }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_rating">Rating:</label>
+                        {{ form.rating|as_crispy_field }}
+                    </div>
+                    <button type="submit" class="btn btn-black rounded-0">Submit Review</button>
+                </form>
+
+                <hr>
+                <h4 class="logo-font mb-4">All Reviews</h4>
+                <div class="table-responsive rounded">
+                    <table class="table table-sm table-borderless">
+                        <thead class="text-black">
+                            <tr>
+                                <th scope="col">User</th>
+                                <th scope="col">Review</th>
+                                <th scope="col">Rating</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for review in reviews %}
+                            <tr>
+                                <td>{{ review.user.username }}</td>
+                                <td>{{ review.review_text }}</td>
+                                <td>{{ review.rating }}</td>
+                                <td>{{ review.created_at }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No reviews yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{% endblock %}
