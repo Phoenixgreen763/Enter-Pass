@@ -98,6 +98,16 @@ def checkout(request):
                             quantity=item_data,
                         )
                         order_line_item.save()
+                        
+                        if event.available_tickets >= item_data:
+                            event.available_tickets -= item_data
+                            event.save()
+                        else:
+                            # Handle insufficient tickets if necessary
+                            messages.error(request, 'Not enough tickets available for the event.')
+                            order.delete()  # Rollback order if tickets are insufficient
+                            return redirect(reverse('view_bag'))
+
                 except Event.DoesNotExist:
                     messages.error(request, (
                         "One of the Events in your bag wasn't found in our database. "
