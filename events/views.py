@@ -40,7 +40,12 @@ def all_events(request):
             messages.error(request, "You didn't enter any search criteria!")
             return redirect(reverse('all_events'))
 
-        queries = Q(title__icontains=query) | Q(description__icontains=query)
+        queries = (
+            Q(title__icontains=query) | 
+            Q(description__icontains=query) |
+            Q(location__icontains=query) |
+            Q(category__name__icontains=query)  
+        )
         events = events.filter(queries)
 
     # Handle category filtering
