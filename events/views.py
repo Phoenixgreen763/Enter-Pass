@@ -9,7 +9,7 @@ def all_events(request):
     """ A view to show all events, including sorting, search queries, and filters """
 
     # Get all events
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('pk')
     
     # Initialize query, sorting, and direction
     query = None
