@@ -19,13 +19,14 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ('category', 'date')
 
     def display_category(self, obj):
-        return dict(Event.CATEGORY_CHOICES).get(obj.category, obj.category)
+        return obj.category.name  # Fetch the name from the related Category model
     display_category.short_description = 'Category'
     display_category.admin_order_field = 'category'
-    
+
     def is_sold_out(self, obj):
         """Returns True if the event is sold out, False otherwise."""
         return obj.is_sold_out()
-    is_sold_out.boolean = True  # This tells Django to render the result as a boolean icon
+    is_sold_out.boolean = True  
 
 admin.site.register(Event, EventAdmin)
+
