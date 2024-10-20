@@ -185,7 +185,7 @@ input[name='q']::placeholder {
 }
 
 @media (max-width: 550px) {
-    .logo-font {
+    .coupon-font {
         font-size: 1.2rem;
     }
 }
