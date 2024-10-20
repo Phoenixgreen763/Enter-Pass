@@ -115,6 +115,15 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 ![User Profile](/static/images/profile.png)
 
 
+* Reviews 
+    * This page displays all customer reviews, including the reviewer’s name, rating (out of 5), and the review description.
+    * Logged-in users have the option to post their own reviews.
+    * Reviews are listed chronologically, showing the most recent submissions first.
+    * Admin users have the ability to manage and delete inappropriate reviews to ensure the platform remains respectful and relevant.
+
+![Reviews]
+
+
 ### Core features
 
 * Event creation and management functionality for organizers
