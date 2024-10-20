@@ -121,7 +121,7 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
     * Reviews are listed chronologically, showing the most recent submissions first.
     * Admin users have the ability to manage and delete inappropriate reviews to ensure the platform remains respectful and relevant.
 
-![Reviews]
+![Reviews](/static/images/reviews.png)
 
 
 ### Core features
