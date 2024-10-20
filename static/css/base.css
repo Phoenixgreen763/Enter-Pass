@@ -199,6 +199,10 @@ input[name='q']::placeholder {
       font-size: 0.75rem; /* Reduce text size */
     }
 
+    .logo-font {
+        font-size: 2.5rem;
+    }
+
     .list-inline-item {
       margin-right: 0.5rem; /* Reduce spacing between items */
     }
