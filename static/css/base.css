@@ -225,10 +225,6 @@ input[name='q']::placeholder {
       .list-inline-item {
         margin-right: 0rem; 
       }
-  
-      .list-inline-item .text-center {
-        padding: 0.5rem 1rem; /* Reduce padding */
-      }
 
     .coupon-font {
         font-size: 1rem;
