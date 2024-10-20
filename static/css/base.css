@@ -212,6 +212,11 @@ input[name='q']::placeholder {
     .nav-link div i {
         font-size: 1.2rem; 
       }
+
+      .nav-link {
+        display: block;
+        padding: .2rem .5rem;
+    }
   
       .nav-link p {
         font-size: 0.75rem; 
@@ -222,7 +227,7 @@ input[name='q']::placeholder {
       }
   
       .list-inline-item .text-center {
-        padding: 0rem; /* Reduce padding */
+        padding: 0.5rem 1rem; /* Reduce padding */
       }
 
     .logo-font {
