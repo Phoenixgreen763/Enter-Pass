@@ -183,3 +183,33 @@ input[name='q']::placeholder {
         height: calc(100vh - 116px);
     }
 }
+
+@media (max-width: 550px) {
+    .logo-font {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .nav-link div i {
+      font-size: 1.2rem; /* Reduce icon size */
+    }
+
+    .nav-link p {
+      font-size: 0.75rem; /* Reduce text size */
+    }
+
+    .list-inline-item {
+      margin-right: 0.5rem; /* Reduce spacing between items */
+    }
+
+    .list-inline-item .text-center {
+      padding: 0.5rem 0; /* Reduce padding */
+    }
+}
+
+@media (max-width: 450px) {
+    .logo-font {
+        font-size: 1rem;
+    }
+}
