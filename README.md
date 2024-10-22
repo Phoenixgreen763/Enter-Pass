@@ -218,7 +218,9 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 ## All Known Bugs
 
-* No known bugs have been found present at this point.
+* The grand total displays correctly upon a succesful checkout, however when a user attempts to review their order afterwards if a coupon was used the grand total will not display the discounted amount. Payments are still displaying as correct, but this can be confusing for a user if they are unsure.
+
+* The order confirmation page sometimes pushes certain elements of the order summary down on specific screen sizes due to the bootstrap styling.
 
 ## Design
 
