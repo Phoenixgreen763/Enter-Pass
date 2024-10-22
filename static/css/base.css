@@ -213,6 +213,10 @@ input[name='q']::placeholder {
 }
 
 @media (max-width: 450px) {
+    .navbar {
+        padding: .5rem .5rem;
+    }
+
     .nav-link div i {
         font-size: 1.2rem; 
       }
