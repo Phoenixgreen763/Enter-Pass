@@ -217,6 +217,10 @@ input[name='q']::placeholder {
         padding: 0rem .5rem;
     }
 
+    .list-inline-item:not(:last-child) {
+        margin-right: 0rem;
+    }
+
     .nav-link div i {
         font-size: 1.2rem; 
       }
@@ -226,15 +230,15 @@ input[name='q']::placeholder {
         padding: 0rem .5rem;
     }
   
-      .nav-link p {
+    .nav-link p {
         font-size: 0.75rem; 
-      }
+    }
   
-      .list-inline-item {
+    .list-inline-item {
         margin-right: 0rem; 
-      }
+    }
 
     .coupon-font {
         font-size: 1rem;
-      }
+    }
 }
