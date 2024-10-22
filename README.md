@@ -209,14 +209,16 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 
 * CSS Validator
     [CSS results](http://jigsaw.w3.org/css-validator/validator?lang=en&profile=css3svg&uri=https%3A%2F%2Fenter-pass-37670ea809e0.herokuapp.com%2F&usermedium=all&vextwarning=&warning=1)
-    ![CSS results]()
+    ![CSS results](/static/images/css.png)
     
 * HTML Validator
-    [HTML results]()
-    ![HTML results]()
+    * Some bootstrap elements that are automatically generated ocassionaly flag up with warnings.
+    [HTML results](https://validator.w3.org/nu/?showsource=yes&doc=https%3A%2F%2Fenter-pass-37670ea809e0.herokuapp.com%2F#l155c29)
+    ![HTML results](/static/images/html.png)
     
 * Light House Testing
-    ![LightHouse results]()
+    * Some bootstrap, css and javascript elements could be seperated to further improve page performance across the site.
+    ![LightHouse results](/static/images/lighthouse.png)
 
 ## All Known Bugs
 
