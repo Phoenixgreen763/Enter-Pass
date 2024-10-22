@@ -59,9 +59,10 @@ def checkout(request):
         if order_form.is_valid():
             order = order_form.save(commit=False)
 
-            # Get or create the user profile
-            user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-            order.user_profile = user_profile  # Associate the order with the user profile
+            # Only associate a user profile if the user is authenticated
+            if request.user.is_authenticated:
+                user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+                order.user_profile = user_profile
 
             # Ensure discount_percentage is a Decimal
             discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
@@ -69,19 +70,9 @@ def checkout(request):
             # Calculate grand total with discounts applied
             grand_total = calculate_grand_total(bag, discount_percentage)
 
-            if isinstance(discount_percentage, float):
-                discount_percentage = Decimal(discount_percentage)
-
             order.discount_percentage = discount_percentage
-            order.discount_amount = (Decimal(order.discount_percentage) / Decimal('100')) # Apply discount
-            order.grand_total = grand_total  # Set grand total after applying discount
-
-            # Calculate grand total with discounts applied
-            grand_total = calculate_grand_total(bag, request.session.get('discount_percentage', Decimal('0.00')))
-            
-            order.discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
             order.discount_amount = (Decimal(order.discount_percentage) / Decimal('100')) * order.order_total
-            order.grand_total = grand_total  
+            order.grand_total = grand_total
 
             pid = client_secret.split('_secret')[0]
             order.stripe_pid = pid
@@ -98,12 +89,11 @@ def checkout(request):
                             quantity=item_data,
                         )
                         order_line_item.save()
-                        
+
                         if event.available_tickets >= item_data:
                             event.available_tickets -= item_data
                             event.save()
                         else:
-                            # Handle insufficient tickets if necessary
                             messages.error(request, 'Not enough tickets available for the event.')
                             order.delete()  # Rollback order if tickets are insufficient
                             return redirect(reverse('view_bag'))
