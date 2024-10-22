@@ -153,12 +153,22 @@ def checkout_success(request, order_number):
     discount_percentage = request.session.get('discount_percentage', Decimal('0.00'))
 
     grand_total = calculate_grand_total(bag, discount_percentage)
-
     order.grand_total = grand_total  # Ensure the order's grand total is set correctly
+
+    # Only update the profile if the user is authenticated
+    if request.user.is_authenticated:
+        user_profile = UserProfile.objects.get(user=request.user)
+
+        # Optionally save user's order info to their profile if requested
+        save_info = request.session.get('save_info')
+        if save_info:
+            user_profile.default_phone_number = order.phone_number
+            user_profile.default_email = order.email
+            user_profile.save()
 
     messages.success(request, f'Order successfully processed! Your order number is {order_number}. A confirmation email will be sent to {order.email}.')
 
-    # Clear session data if needed
+    # Clear session data
     if 'bag' in request.session:
         del request.session['bag']
     if 'discount_code' in request.session:
@@ -171,3 +181,4 @@ def checkout_success(request, order_number):
     }
 
     return render(request, 'checkout/checkout_success.html', context)
+
