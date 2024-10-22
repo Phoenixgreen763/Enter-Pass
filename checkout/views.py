@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.conf import settings
 from decimal import Decimal
 import stripe
@@ -16,6 +19,22 @@ from bag.views import calculate_grand_total
 
 # Set up logging
 logger = logging.getLogger(__name__)
+
+def send_order_confirmation_email(order):
+    # Load the email subject from subject.txt
+    subject = render_to_string('checkout/confirmation emails/subject.txt', {'order': order}).strip()
+
+    # Load the email body from body.txt
+    email_body = render_to_string('checkout/confirmation emails/confirmation email body.txt', {'order': order})
+    plain_message = strip_tags(email_body)
+
+    send_mail(
+        subject,
+        plain_message,
+        settings.DEFAULT_FROM_EMAIL,
+        [order.email],  # Send to the order email address
+        html_message=email_body,  # HTML version of the message
+    )
 
 @require_POST
 def cache_checkout_data(request):
@@ -154,6 +173,9 @@ def checkout_success(request, order_number):
 
     grand_total = calculate_grand_total(bag, discount_percentage)
     order.grand_total = grand_total  # Ensure the order's grand total is set correctly
+    
+    # Send order confirmation email
+    send_order_confirmation_email(order)
 
     # Only update the profile if the user is authenticated
     if request.user.is_authenticated:
