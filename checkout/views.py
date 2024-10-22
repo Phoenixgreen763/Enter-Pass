@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 def send_order_confirmation_email(order):
     # Load the email subject from subject.txt
-    subject = render_to_string('checkout/confirmation_emails/subject.txt', {'order': order}).strip()
+    subject = render_to_string('checkout/confirmation_emails/confirmation_email_subject.txt', {'order': order}).strip()
 
     # Load the email body from confirmation_email_body.txt
     email_body = render_to_string('checkout/confirmation_emails/confirmation_email_body.txt', {'order': order})
