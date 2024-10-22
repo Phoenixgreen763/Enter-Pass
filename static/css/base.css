@@ -35,6 +35,10 @@ body {
     width: 1.5rem;
 }
 
+.coupon-font {
+    text-transform: uppercase;
+}
+
 .logo-font {
     text-transform: uppercase;
 }
