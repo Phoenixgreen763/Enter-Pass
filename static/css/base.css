@@ -221,9 +221,9 @@ input[name='q']::placeholder {
         font-size: 1.2rem; 
       }
 
-      .nav-link {
+    .nav-link {
         display: block;
-        padding: .2rem .5rem;
+        padding: 0rem .5rem;
     }
   
       .nav-link p {
