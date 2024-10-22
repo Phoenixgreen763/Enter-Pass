@@ -243,6 +243,6 @@ input[name='q']::placeholder {
     }
 
     .coupon-font {
-        font-size: 1rem;
+        font-size: .8rem;
     }
 }
