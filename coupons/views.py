@@ -1,9 +1,5 @@
-from decimal import Decimal
-from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib import messages
-
-from rest_framework import status
-from rest_framework.response import Response
 from .models import Coupon
 
 
@@ -20,16 +16,21 @@ def create_coupon(request):
             expiration_date=expiration_date,
             usage_limit=usage_limit
         )
-        
-        messages.success(request, f'Coupon {coupon.code} created successfully!')
+
+        messages.success(
+            request,
+            f'Coupon {coupon.code} created successfully!'
+        )
+
         return redirect('view_bag')  # Redirect or render a template
 
     return render(request, 'create_coupon.html')
 
+
 def apply_coupon(request):
     if request.method == 'POST':
-        code = request.POST.get('discount_code')  
-        
+        code = request.POST.get('discount_code')
+
         try:
             coupon = Coupon.objects.get(code=code)
         except Coupon.DoesNotExist:
@@ -37,9 +38,10 @@ def apply_coupon(request):
             return redirect('view_bag')  # Redirect back to the bag page
 
         # Validate coupon
-        if not coupon.is_valid():  # Make sure you have this method defined in your Coupon model
+        # Make sure you have this method defined in your Coupon model
+        if not coupon.is_valid():
             messages.error(request, 'Coupon is invalid or expired.')
-            return redirect('view_bag')  
+            return redirect('view_bag')
 
         # Update coupon usage count
         coupon.used_count += 1
@@ -47,10 +49,19 @@ def apply_coupon(request):
 
         # Store discount information in the session
         request.session['discount_code'] = coupon.code
-        request.session['discount_percentage'] = float(coupon.discount_percentage)  # Convert Decimal to float
+        # Convert Decimal to float
+        request.session['discount_percentage'] = (
+            float(coupon.discount_percentage)
+        )
 
-        messages.success(request, f'Coupon {coupon.code} applied! Discount:{coupon.discount_percentage}%')
-        return redirect('view_bag')  
+        messages.success(
+            request,
+            (
+                f'Coupon {coupon.code} applied! '
+                f'Discount: {coupon.discount_percentage}%'
+            )
+        )
+        return redirect('view_bag')
 
     # If not a POST request, redirect back
     return redirect('view_bag')
@@ -63,7 +74,7 @@ def remove_coupon(request):
             del request.session['discount_code']
         if 'discount_percentage' in request.session:
             del request.session['discount_percentage']
-        
+
         messages.success(request, 'Discount code removed.')
-    
+
     return redirect('view_bag')

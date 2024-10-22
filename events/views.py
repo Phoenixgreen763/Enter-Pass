@@ -5,12 +5,17 @@ from django.db.models.functions import Lower
 from .models import Event, Category
 from .forms import EventForm
 
+
 def all_events(request):
-    """ A view to show all events, including sorting, search queries, and filters """
+    """
+    A view to show all events,
+    including sorting,
+    search queries, and filters
+    """
 
     # Get all events
     events = Event.objects.all().order_by('pk')
-    
+
     # Initialize query, sorting, and direction
     query = None
     sort = None
@@ -41,10 +46,10 @@ def all_events(request):
             return redirect(reverse('all_events'))
 
         queries = (
-            Q(title__icontains=query) | 
+            Q(title__icontains=query) |
             Q(description__icontains=query) |
             Q(location__icontains=query) |
-            Q(category__name__icontains=query)  
+            Q(category__name__icontains=query)
         )
         events = events.filter(queries)
 
@@ -53,18 +58,24 @@ def all_events(request):
         category = request.GET['category']
         if category != 'all':
             try:
-                category_instance = Category.objects.get(id=category)  # Get the Category object
-                events = events.filter(category=category_instance)  # Filter by the Category instance
+                # Get the Category object
+                category_instance = Category.objects.get(id=category)
+                # Filter by the Category instance
+                events = events.filter(category=category_instance)
             except Category.DoesNotExist:
                 messages.error(request, "Selected category does not exist.")
                 return redirect(reverse('all_events'))
 
     # Fetch all categories for navbar
     categories = Category.objects.all()
-    
+
     # Construct current sorting string for context
-    current_sorting = f'{sort}_{direction}' if sort and direction else 'None_None'
-    
+    current_sorting = (
+        f'{sort}_{direction}'
+        if sort and direction
+        else 'None_None'
+    )
+
     context = {
         'events': events,
         'search_term': query,
@@ -86,7 +97,7 @@ def event_detail(request, event_id):
 
 
 def add_event(request):
-  
+
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
@@ -94,10 +105,13 @@ def add_event(request):
             messages.success(request, 'Successfully added Event!')
             return redirect(reverse('event_detail', args=[event.id]))
         else:
-            messages.error(request, 'Failed to add Event. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to add Event. Please ensure the form is valid.'
+            )
     else:
         form = EventForm()
-        
+
     template = 'events/add_event.html'
     context = {
         'form': form,
@@ -114,11 +128,13 @@ def edit_event(request, event_id):
         form = EventForm(request.POST, request.FILES, instance=event)
         if form.is_valid():
             form.save()
-            return redirect('event_detail', event_id=event.id)  # Redirect to the event detail page
+            # Redirect to the event detail page
+            return redirect('event_detail', event_id=event.id)
     else:
         form = EventForm(instance=event)
 
-    return render(request, 'events/edit_event.html', {'form': form, 'event': event})
+    return render(request, 'events/edit_event.html',
+                  {'form': form, 'event': event})
 
 
 def delete_event(request, event_id):
