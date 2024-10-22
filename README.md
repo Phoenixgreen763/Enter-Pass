@@ -208,9 +208,11 @@ View the live website here - https://enter-pass-37670ea809e0.herokuapp.com
 * Static code analysis tools were used to check for coding standards, potential errors, and code quality. These tools help maintain a clean codebase and prevent common pitfalls in development.
 
 * CSS Validator
-    ![CSS results](http://jigsaw.w3.org/css-validator/validator?lang=en&profile=css3svg&uri=https%3A%2F%2Fenter-pass-37670ea809e0.herokuapp.com%2F&usermedium=all&vextwarning=&warning=1)
+    [CSS results](http://jigsaw.w3.org/css-validator/validator?lang=en&profile=css3svg&uri=https%3A%2F%2Fenter-pass-37670ea809e0.herokuapp.com%2F&usermedium=all&vextwarning=&warning=1)
+    ![CSS results]()
     
 * HTML Validator
+    [HTML results]()
     ![HTML results]()
     
 * Light House Testing
