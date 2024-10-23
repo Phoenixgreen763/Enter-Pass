@@ -38,6 +38,7 @@ body {
 .coupon-font {
     text-transform: uppercase;
 }
+
 .logo-font {
     text-transform: uppercase;
 }
@@ -70,9 +71,11 @@ body {
 .event-header {
     margin-top: 1rem !important;
 }
+
 .banner-detail {
     margin-bottom: 5%;
 }
+
 .btn-black {
     background: black;
     color: white;
@@ -118,12 +121,15 @@ body {
     color: black;
     text-decoration: none;
 }
+
 .back-to-top {
     margin-top: 1%;
 }
+
 .book-button {
     margin-bottom: 1%;
 }
+
 input[name='q']::placeholder {
     color: #aab7c4;
 }
@@ -138,12 +144,8 @@ input[name='q']::placeholder {
     z-index: -1;
 }
 
-/* Toasts */
-.toast-capper {
-    height: 2px;
-}
-
 /* ------------------------------- bootstrap toasts */
+
 .message-container {
     position: fixed;
     top: 72px;
@@ -158,6 +160,8 @@ input[name='q']::placeholder {
 .toast-capper {
     height: 2px;
 }
+
+
 /* fixed top navbar only on medium and up */
 @media (min-width: 992px) {
     .fixed-top-desktop-only {
@@ -183,6 +187,7 @@ input[name='q']::placeholder {
         height: calc(100vh - 116px);
     }
 }
+
 @media (max-width: 550px) {
     .coupon-font {
         font-size: 1.2rem;
@@ -193,15 +198,19 @@ input[name='q']::placeholder {
     .nav-link div i {
       font-size: 1.2rem; /* Reduce icon size */
     }
+
     .nav-link p {
       font-size: 0.75rem; /* Reduce text size */
     }
+
     .logo-font {
         font-size: 2.5rem;
     }
+
     .list-inline-item {
       margin-right: 0.5rem; /* Reduce spacing between items */
     }
+
     .list-inline-item .text-center {
       padding: 0.5rem 0; /* Reduce padding */
     }
@@ -211,24 +220,28 @@ input[name='q']::placeholder {
     .navbar {
         padding: 0rem .5rem;
     }
+
     .list-inline-item:not(:last-child) {
         margin-right: 0rem;
     }
+
     .nav-link div i {
         font-size: 1.2rem; 
       }
+
     .nav-link {
         display: block;
         padding: 0rem .5rem;
     }
-  
+
     .nav-link p {
         font-size: 0.75rem; 
     }
-  
+
     .list-inline-item {
         margin-right: 0rem; 
     }
+
     .coupon-font {
         font-size: .8rem;
     }
