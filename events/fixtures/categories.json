@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "Sports",
-            "image": "images/sports-events.webp"  
+            "image": "sports-events.webp"  
         }
     },
     {
@@ -12,7 +12,7 @@
         "pk": 2,
         "fields": {
             "name": "Music/Festivals",
-            "image": "images/music-events.jpg"  
+            "image": "music-events.jpg"  
         }
     },
     {
@@ -20,7 +20,7 @@
         "pk": 3,
         "fields": {
             "name": "Theatre",
-            "image": "images/theatre-events.webp"  
+            "image": "theatre-events.webp"  
         }
     }
 ]
