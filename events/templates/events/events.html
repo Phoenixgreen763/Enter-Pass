@@ -49,42 +49,43 @@
                 </div>
             </div>
             <div class="row">
-            {% for event in events %}
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                    <div class="card h-100 border-0">
-                        <div class="card-body pb-0">
-                            <a href="{% url 'event_detail' event.id %}" class="event_link">
-                                {% if event.category.image %}
-                                    <img src="{% event.category.image %}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
-                                {% else %}
-                                    <img src="{% 'static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
-                                {% endif %}
-                                <p class="mb-0 font-weight-bold">{{ event.title }}</p>
-                            </a>
-                            <p class="mb-0">{{ event.date }}</p>
-                            <p class="text-muted mb-1">{{ event.location }}</p>
-                        </div>
-                        <div class="card-footer bg-white pt-0 border-0 text-left">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="lead mb-0 text-left font-weight-bold">Tickets: {{ event.available_tickets }} available</p>
-                                    <p class="text-success font-weight-bold">Price: ${{ event.price }}</p>
-                                    {% if event.category %}
-                                        <p class="small mt-1 mb-0">
-                                            <a class="text-muted" href="{% url 'all_events' %}?category={{ event.category.id }}">
-                                                <i class="fas fa-tag mr-1"></i>{{ event.category.name }}
-                                            </a>
-                                        </p>
+                {% for event in events %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="card h-100 border-0">
+                            <div class="card-body pb-0">
+                                <a href="{% url 'event_detail' event.id %}" class="event_link">
+                                    {% if event.category.image %}
+                                        <img src="{{ event.category.image.url }}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
+                                    {% else %}
+                                        <img src="{% static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
                                     {% endif %}
-                                    {% if event.is_sold_out %}
-                                        <small class="text-danger">Sold Out</small>
-                                    {% endif %}
-                                    {% if request.user.is_superuser %}
-                                        <small class="ml-3">
-                                            <a href="{% url 'edit_event' event.id %}" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="{% url 'delete_event' event.id %}" class="btn btn-sm btn-danger">Delete</a>
-                                        </small>
-                                    {% endif %}
+                                    <p class="mb-0 font-weight-bold">{{ event.title }}</p>
+                                </a>
+                                <p class="mb-0">{{ event.date }}</p>
+                                <p class="text-muted mb-1">{{ event.location }}</p>
+                            </div>
+                            <div class="card-footer bg-white pt-0 border-0 text-left">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="lead mb-0 text-left font-weight-bold">Tickets: {{ event.available_tickets }} available</p>
+                                        <p class="text-success font-weight-bold">Price: ${{ event.price }}</p>
+                                        {% if event.category %}
+                                            <p class="small mt-1 mb-0">
+                                                <a class="text-muted" href="{% url 'all_events' %}?category={{ event.category.id }}">
+                                                    <i class="fas fa-tag mr-1"></i>{{ event.category.name }}
+                                                </a>
+                                            </p>
+                                        {% endif %}
+                                        {% if event.is_sold_out %}
+                                            <small class="text-danger">Sold Out</small>
+                                        {% endif %}
+                                        {% if request.user.is_superuser %}
+                                            <small class="ml-3">
+                                                <a href="{% url 'edit_event' event.id %}" class="btn btn-sm btn-primary">Edit</a>
+                                                <a href="{% url 'delete_event' event.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                            </small>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +93,7 @@
                 </div>
             {% endfor %}            
             </div>
-            
+
         </div>
     </div>
 </div>
