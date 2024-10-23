@@ -40,7 +40,7 @@
                                 <tr>
                                     <td class="p-3 w-25">
                                     {% if item.event.category.image %}
-                                        <img src="{{ item.event.category.image.url }}" class="card-img-top" alt="{{ item.event.category.name }}" style="height: 100px; object-fit: cover;">
+                                        <img src="{{ item.event.category.image }}" class="card-img-top" alt="{{ item.event.category.name }}" style="height: 100px; object-fit: cover;">
                                     {% else %}
                                         <img src="{% static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
                                     {% endif %}
