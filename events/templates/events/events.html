@@ -55,7 +55,7 @@
                             <div class="card-body pb-0">
                                 <a href="{% url 'event_detail' event.id %}" class="event_link">
                                     {% if event.category.image %}
-                                        <img src="{{ category.image.url }}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
+                                        <img src="{{ event.category.image.url }}" class="card-img-top" alt="{{ event.category.name }}" style="height: 100px; object-fit: cover;">
                                     {% else %}
                                         <img src="{% static 'images/default-banner.jpg' %}" class="card-img-top" alt="Default Banner" style="height: 100px; object-fit: cover;">
                                     {% endif %}
