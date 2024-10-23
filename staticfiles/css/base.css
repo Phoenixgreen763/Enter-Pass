@@ -233,11 +233,11 @@ input[name='q']::placeholder {
         display: block;
         padding: 0rem .5rem;
     }
-  
+
     .nav-link p {
         font-size: 0.75rem; 
     }
-  
+
     .list-inline-item {
         margin-right: 0rem; 
     }
