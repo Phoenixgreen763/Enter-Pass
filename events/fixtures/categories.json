@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "Sports",
-            "image": "sports-events.webp"  
+            "image": "https://res.cloudinary.com/dnj7hkjnk/image/upload/v1729647410/sports-events_zad6ko.webp"  
         }
     },
     {
@@ -12,7 +12,7 @@
         "pk": 2,
         "fields": {
             "name": "Music/Festivals",
-            "image": "music-events.jpg"  
+            "image": "https://res.cloudinary.com/dnj7hkjnk/image/upload/v1729647424/music-events_xml5cq.jpg"  
         }
     },
     {
@@ -20,7 +20,7 @@
         "pk": 3,
         "fields": {
             "name": "Theatre",
-            "image": "theatre-events.webp"  
+            "image": "https://res.cloudinary.com/dnj7hkjnk/image/upload/v1729647380/theatre-events_rtqzfw.webp"  
         }
     }
 ]
